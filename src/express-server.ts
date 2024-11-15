@@ -1,13 +1,16 @@
 import { Express, Request, Response } from "npm:express";
-import { ErrorMessages } from "./error-messages.ts";
+import { Server } from "npm:http";
 
-export const initializeExpress = (app: Express, port: number, console: Console) => {
+import { ErrorMessages, LoggedMessages } from "./messages.ts";
+
+export const initializeExpress = (app: Express, port: number, console: Console): Server => {
     if (port < 1 || port > 65535) {
         throw new Error(ErrorMessages.InvalidPortSpecified);
     }
     app.get("/", (_req: Request, res: Response) => {
         res.send("Hello World!");
-      });
-      app.listen(port);
-      console.log(`Server running on http://localhost:${port}`);
+    });
+    const server: Server = app.listen(port);
+    console.log(`${LoggedMessages.ServerRunning}${port}`);
+    return server;
 };
