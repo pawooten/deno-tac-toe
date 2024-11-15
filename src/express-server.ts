@@ -1,5 +1,5 @@
 import express from "npm:express";
-import { Server } from "npm:http";
+import http from "npm:http";
 
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 import { ServerConstants } from "./constants/server-constants.ts";
@@ -10,12 +10,12 @@ export const initialize = (app: express.Express, port: number, console: Console)
     }
     const staticHandler = express.static(ServerConstants.Public)
     app.use(staticHandler);
-    const server: Server = app.listen(port);
+    const server: http.Server = app.listen(port);
     console.log(`${LoggedMessages.ServerRunning}${port}`);
     return { server, staticHandler };
 };
 
 export interface ExpressInitializationResult {
-    server: Server,
+    server: http.Server,
     staticHandler: express.Handler;
 }
