@@ -1,6 +1,6 @@
-import express, { Express } from "npm:express";
-import { initializeExpress } from "./express-server.ts";
+import express from "npm:express";
+import { initialize } from "./express-server.ts";
 
 const port = 8000;
-const app: Express = express();
-initializeExpress(app, port, console);
+const app: express.Express = express();
+initialize(app, port, console);
