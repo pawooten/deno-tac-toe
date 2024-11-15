@@ -40,13 +40,12 @@ Deno.test(function initializeExpress_logsServerRunningWithSpecifiedPort() {
   assertNotEquals(server, undefined);
 });
 Deno.test(function initializeExpress_listensToSpecifiedPort() {
-  // Verify initializeExpress() calls listen() with specified port
+  // Verify initializeExpress() calls listen() with specified port and returns server instance returned by listen()
   const app = new Express();
   const port = 8000;
   const spyAppListen = spy(app, "listen");
   const server = initializeExpress(app, port, console);
   server.close();
-  assertSpyCall(spyAppListen, 0, { args: [port] });
-  assertNotEquals(server, undefined);
+  assertSpyCall(spyAppListen, 0, { args: [port], returned: server });
 });
 //#endregion
