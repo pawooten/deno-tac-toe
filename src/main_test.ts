@@ -43,11 +43,10 @@ Deno.test(function initializeExpress_listensToSpecifiedPort() {
   // Verify initializeExpress() calls listen() with specified port
   const app = new Express();
   const port = 8000;
-  const spyConsoleLog = spy(console, "log");
+  const spyAppListen = spy(app, "listen");
   const server = initializeExpress(app, port, console);
   server.close();
-  const expectedLoggedMessage = `${LoggedMessages.ServerRunning}${port}`;
-  assertSpyCall(spyConsoleLog, 0, { args: [expectedLoggedMessage] });
+  assertSpyCall(spyAppListen, 0, { args: [port] });
   assertNotEquals(server, undefined);
 });
 //#endregion
