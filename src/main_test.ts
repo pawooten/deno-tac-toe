@@ -3,7 +3,7 @@ import { assertSpyCall, spy } from "https://deno.land/x/mock@0.15.2/mod.ts";
 import Express from "npm:express";
 
 import { initializeExpress } from "./express-server.ts";
-import { ErrorMessages, LoggedMessages } from "./messages.ts";
+import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 
 //#region Port Tests
 Deno.test(function initializeExpress_portTooLow() {
