@@ -1,5 +1,6 @@
+import { Server, createServer } from "node:http";
 import express from "npm:express";
-import http from "npm:http";
+import { Server as SocketServer } from "npm:socket.io";
 
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 import { ServerConstants } from "./constants/server-constants.ts";
@@ -8,14 +9,23 @@ export const initialize = (app: express.Express, port: number, console: Console)
     if (port < 1 || port > 65535) {
         throw new Error(ErrorMessages.InvalidPortSpecified);
     }
-    const staticHandler = express.static(ServerConstants.Public)
+
+    const staticHandler = express.static(ServerConstants.Public);
     app.use(staticHandler);
-    const server: http.Server = app.listen(port);
+
+    const server = createServer(app);
+    const socketServer = new SocketServer(server, { serveClient: false });
+    socketServer.on("connection", (socket) => {
+    console.log("a user connected by websocket");
+    socket.on('message', (message) => console.log(message));
+    });
+    server.listen(port);
+
     console.log(`${LoggedMessages.ServerRunning}${port}`);
     return { server, staticHandler };
 };
 
 export interface ExpressInitializationResult {
-    server: http.Server,
+    server: Server,
     staticHandler: express.Handler;
 }
