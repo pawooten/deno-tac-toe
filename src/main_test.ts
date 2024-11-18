@@ -3,7 +3,7 @@ import { assertEquals, assertNotEquals } from "@std/assert";
 import { assertSpyCall, spy } from "https://deno.land/x/mock@0.15.2/mod.ts";
 import express from "npm:express";
 
-import { initialize } from "./express-server.ts";
+import { initialize, staticRequestHandler } from "./express-server.ts";
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 
 //#region Port Tests
@@ -60,8 +60,8 @@ Deno.test(function initializeExpress_servesStaticFiles() {
   const server = createServer(app);
   const port = 8000;
   const spyAppUse = spy(app, "use");
-  const { staticHandler } = initialize(app, server, port, console);
+  initialize(app, server, port, console);
   server.close();
-  assertSpyCall(spyAppUse, 0, { args: [staticHandler] });
+  assertSpyCall(spyAppUse, 0, { args: [staticRequestHandler] });
 });
 //#endregion
