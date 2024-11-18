@@ -4,6 +4,7 @@
     "specifiers": {
       "jsr:@std/assert@1": "jsr:@std/assert@1.0.8",
       "jsr:@std/internal@^1.0.5": "jsr:@std/internal@1.0.5",
+      "npm:@types/node": "npm:@types/node@18.16.19",
       "npm:express": "npm:express@4.21.1",
       "npm:socket.io": "npm:socket.io@4.8.0"
     },
