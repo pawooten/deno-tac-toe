@@ -30,7 +30,7 @@ export class ServerInitializer {
   
     this.console.log(`${LoggedMessages.ServerRunning}http://${this.config.hostName}:${this.config.port}`);
   }
-  initializeWebSocketServer(socketServer: SocketServer) {
+  private initializeWebSocketServer(socketServer: SocketServer) {
     socketServer.on(SocketConstants.Connection, this.socketConnectionHandler);
     console.log(LoggedMessages.WebSocketServerInitialized);
   }
