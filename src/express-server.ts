@@ -5,8 +5,8 @@ import { Server as SocketServer, Socket } from "npm:socket.io";
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 import { ServerConstants } from "./constants/server-constants.ts";
 import { SocketConstants } from "./constants/socket-constants.ts";
-import { CellSelectionHandler } from "./cell-selection-handler.ts";
-import { GameHostHandler } from "./game-host-handler.ts";
+import { CellSelectionHandler } from "./handlers/cell-selection-handler.ts";
+import { GameHostHandler } from "./handlers/game-host-handler.ts";
 export const initialize = (app: express.Express, server: Server, port: number, console: Console): void => {
     if (port < ServerConstants.minPort || port > ServerConstants.maxPort) {
         throw new Error(ErrorMessages.InvalidPortSpecified);

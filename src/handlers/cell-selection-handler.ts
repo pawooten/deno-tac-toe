@@ -1,5 +1,5 @@
 import { Socket } from "npm:socket.io";
-import { SocketConstants } from "./constants/socket-constants.ts";
+import { SocketConstants } from "../constants/socket-constants.ts";
 
 export class CellSelectionHandler {
     private readonly socket:Socket;
