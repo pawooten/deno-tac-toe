@@ -1,12 +1,7 @@
-import { Socket } from "npm:socket.io";
 import { SocketConstants } from "../constants/socket-constants.ts";
+import { BaseHandler } from "./base-handler.ts";
 
-export class GameHostHandler {
-    private readonly socket:Socket;
-    constructor(socket: Socket) {
-        this.socket = socket;
-    }
-
+export class GameHostHandler extends BaseHandler {
     public handle(): void {
         console.log(`Game host handler called`);
         // TODO, surrender existing game as the user has decided to host
