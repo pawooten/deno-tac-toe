@@ -1,6 +1,6 @@
 import { Server } from "node:http";
 import express from "npm:express";
-import { Server as SocketServer } from "npm:socket.io";
+import { Server as SocketServer, Socket } from "npm:socket.io";
 
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 import { ServerConstants } from "./constants/server-constants.ts";
@@ -20,10 +20,13 @@ export const initialize = (app: express.Express, server: Server, port: number, c
 
 export const staticRequestHandler = express.static(ServerConstants.Public);
 
+export const socketConnectionHandler = (socket: Socket) => {
+  console.log(LoggedMessages.WebSocketConnection);
+  socket.on(SocketConstants.Message, (message: string) => console.log(message));
+};
+
 export const initializeWebSocketServer = (server: Server, console: Console) => {
   const socketServer = new SocketServer(server, { serveClient: false });
-  socketServer.on(SocketConstants.Connection, (socket) => {
-    console.log(LoggedMessages.WebSocketConnection);
-    socket.on(SocketConstants.Message, (message: string) => console.log(message));
-  });
+  socketServer.on(SocketConstants.Connection, socketConnectionHandler);
+  console.log(LoggedMessages.WebSocketServerInitialized);
 };

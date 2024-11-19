@@ -1,10 +1,11 @@
 import { createServer } from 'node:http';
-import { assertEquals, assertNotEquals } from "@std/assert";
+import { assertEquals } from "@std/assert";
 import { assertSpyCall, spy } from "https://deno.land/x/mock@0.15.2/mod.ts";
 import express from "npm:express";
 
-import { initialize, staticRequestHandler } from "./express-server.ts";
+import { initialize, initializeWebSocketServer, socketConnectionHandler, staticRequestHandler } from "./express-server.ts";
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
+import { SocketConstants } from "./constants/socket-constants.ts";
 
 //#region Port Tests
 Deno.test(function initializeExpress_portTooLow() {
@@ -37,9 +38,9 @@ Deno.test(function initializeExpress_logsServerRunningWithSpecifiedPort() {
   const spyConsoleLog = spy(console, "log");
   initialize(app, server, port, console);
   server.close();
+  assertSpyCall(spyConsoleLog, 0, { args: [LoggedMessages.WebSocketServerInitialized ] });
   const expectedLoggedMessage = `${LoggedMessages.ServerRunning}${port}`;
-  assertSpyCall(spyConsoleLog, 0, { args: [expectedLoggedMessage] });
-  assertNotEquals(server, undefined);
+  assertSpyCall(spyConsoleLog, 1, { args: [expectedLoggedMessage] });
 });
 Deno.test(function initializeExpress_listensToSpecifiedPort() {
   // Verify initializeExpress() calls listen() with specified port and returns server instance returned by listen()
@@ -63,5 +64,16 @@ Deno.test(function initializeExpress_servesStaticFiles() {
   initialize(app, server, port, console);
   server.close();
   assertSpyCall(spyAppUse, 0, { args: [staticRequestHandler] });
+});
+//#endregion
+
+//#region WebSocket Tests
+Deno.test(function initializeWebSocketServer_logsWebServerInitialized() {
+  const app = new express();
+  const server = createServer(app);
+  const spyConsoleLog = spy(console, "log");
+  initializeWebSocketServer(server, console);
+  server.close();
+  assertSpyCall(spyConsoleLog, 0, { args: [LoggedMessages.WebSocketServerInitialized] });
 });
 //#endregion
