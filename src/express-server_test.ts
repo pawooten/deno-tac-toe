@@ -2,10 +2,12 @@ import { createServer } from 'node:http';
 import { assertEquals } from "@std/assert";
 import { assertSpyCall, spy } from "https://deno.land/x/mock@0.15.2/mod.ts";
 import express from "npm:express";
-
+import { Server as SocketServer } from "npm:socket.io";
 import { initialize, initializeWebSocketServer, socketConnectionHandler, staticRequestHandler } from "./express-server.ts";
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 import { SocketConstants } from "./constants/socket-constants.ts";
+
+const spyConsoleLog = spy(console, "log");
 
 //#region Port Tests
 Deno.test(function initializeExpress_portTooLow() {
@@ -35,7 +37,6 @@ Deno.test(function initializeExpress_logsServerRunningWithSpecifiedPort() {
   const app = new express();
   const server = createServer(app);
   const port = 8000;
-  const spyConsoleLog = spy(console, "log");
   initialize(app, server, port, console);
   server.close();
   assertSpyCall(spyConsoleLog, 0, { args: [LoggedMessages.WebSocketServerInitialized ] });
@@ -71,9 +72,18 @@ Deno.test(function initializeExpress_servesStaticFiles() {
 Deno.test(function initializeWebSocketServer_logsWebServerInitialized() {
   const app = new express();
   const server = createServer(app);
-  const spyConsoleLog = spy(console, "log");
-  initializeWebSocketServer(server, console);
+  const socketServer = new SocketServer(server, { serveClient: false });
+  initializeWebSocketServer(socketServer, console);
   server.close();
   assertSpyCall(spyConsoleLog, 0, { args: [LoggedMessages.WebSocketServerInitialized] });
+});
+Deno.test(function initializeWebSocketServer_bindsToConnectionEvent() {
+  const app = new express();
+  const server = createServer(app);
+  const socketServer = new SocketServer(server, { serveClient: false });
+  const spySocketServerOn = spy(socketServer, "on");
+  initializeWebSocketServer(socketServer, console);
+  server.close();
+  assertSpyCall(spySocketServerOn, 0, { args: [SocketConstants.Connection, socketConnectionHandler] });
 });
 //#endregion

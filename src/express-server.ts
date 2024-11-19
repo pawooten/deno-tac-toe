@@ -12,7 +12,8 @@ export const initialize = (app: express.Express, server: Server, port: number, c
     }
 
     app.use(staticRequestHandler);
-    initializeWebSocketServer(server, console);
+    const socketServer = new SocketServer(server, { serveClient: false });
+    initializeWebSocketServer(socketServer, console);
     server.listen(port);
 
     console.log(`${LoggedMessages.ServerRunning}${port}`);
@@ -25,8 +26,7 @@ export const socketConnectionHandler = (socket: Socket) => {
   socket.on(SocketConstants.Message, (message: string) => console.log(message));
 };
 
-export const initializeWebSocketServer = (server: Server, console: Console) => {
-  const socketServer = new SocketServer(server, { serveClient: false });
+export const initializeWebSocketServer = (socketServer: SocketServer, console: Console) => {
   socketServer.on(SocketConstants.Connection, socketConnectionHandler);
   console.log(LoggedMessages.WebSocketServerInitialized);
 };
