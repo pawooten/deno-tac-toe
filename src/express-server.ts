@@ -23,7 +23,7 @@ export const staticRequestHandler = express.static(ServerConstants.Public);
 
 export const socketConnectionHandler = (socket: Socket) => {
   console.log(LoggedMessages.WebSocketConnection);
-  socket.on(SocketConstants.Message, (message: string) => console.log(message));
+  socket.on(SocketConstants.CellSelected, (selectedCell: string) => console.log(`User selected cell: ${selectedCell}`));
 };
 
 export const initializeWebSocketServer = (socketServer: SocketServer, console: Console) => {
