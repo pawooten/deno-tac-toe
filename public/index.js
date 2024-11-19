@@ -9,7 +9,6 @@ socket.on('host-game', (gameUrl) => {
 const hostGame = async (gameUrl) => {
     try {
         await navigator.clipboard.writeText(gameUrl);
-        $hostButtonElement.innerHTML = '&#x2713;'; // ✓
       } catch (error) {
         console.error(error.message);
       }

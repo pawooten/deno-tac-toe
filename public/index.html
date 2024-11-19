@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Deno-Tac-Toe</title>
+        <title># Deno-Tac-Toe</title>
         <link rel="stylesheet" href="./index.css">
         <script src="https://cdn.socket.io/4.8.0/socket.io.min.js" integrity="sha384-OoIbkvzsFFQAG88r+IqMAjyOtYDPGO0cqK5HF5Uosdy/zUEGySeAzytENMDynREd" crossorigin="anonymous"></script>
         <script type="text/javascript" src="./index.js" defer></script>
     </head>
     <body>
-        <h3>Deno-Tac-Toe</h3>
+        <h3>	
+            &#65283; Deno-Tac-Toe</h3>
         <div id="game-control-panel">
             <div>
-                <button id="host-button" popovertarget="popover">Host</button>
-                <button id="join-button">Join</button>
+                <button id="host-button" popovertarget="game-host-popover">Host</button>
+                <button id="join-button" popovertarget="error-popover">Join</button>
                 <input type="text" id="gameIdInput" placeholder="Join Code">    
             </div>
             <div>
@@ -37,6 +38,13 @@
                 </div>
             </div>    
         </div>
-        <span popover id="popover">Hosted game URL copied to clipboard!</span>
+        <span popover id="game-host-popover">	
+            Hosted game URL copied to clipboard!	
+            &#128077;
+        </span>
+        <span popover id="error-popover">
+            Something went wrong
+            &#128557;
+        </span>
     </body>    
 </html>
