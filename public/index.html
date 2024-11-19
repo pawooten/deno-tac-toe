@@ -12,10 +12,12 @@
         <div id="game-control-panel">
             <div>
                 <button id="host-button" popovertarget="game-host-popover">Host</button>
-                <button id="join-button" popovertarget="error-popover">Join</button>
-                <input type="text" id="gameIdInput" placeholder="Join Code">    
+                <span id="game-control-panel__join">
+                    <button id="join-button" popovertarget="error-popover">Join</button>
+                    <input type="text" id="gameIdInput" placeholder="Join Code">        
+                </span>
             </div>
-            <div>
+            <div id="game-control-panel__subtitle">
                 <pre>&#128712; the host is always X, the guest is always O</pre>
             </div>
         </div>

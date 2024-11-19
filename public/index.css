@@ -27,8 +27,18 @@ body {
     align-items: center;
     margin: 1vw;
 }
+#game-control-panel__join {
+    border: 1px solid black;
+    border-radius: 0.5vw;
+    padding: 0.5vw;
+    margin: 1vw;
+}
+#game-control-panel__subtitle {
+    margin-top: 0.5vh;
+}
 button {
     width: 10vw;
+    cursor: pointer;
 }
 pre {
     margin:0;
