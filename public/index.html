@@ -9,9 +9,14 @@
     <body>
         <h3>Deno-Tac-Toe</h3>
         <div id="game-control-panel">
-            <button id="host-button" popovertarget="popover">Host</button>
-            <button id="join-button">Join</button>
-            <input type="text" id="gameIdInput" placeholder="Join Code">
+            <div>
+                <button id="host-button" popovertarget="popover">Host</button>
+                <button id="join-button">Join</button>
+                <input type="text" id="gameIdInput" placeholder="Join Code">    
+            </div>
+            <div>
+                <pre>&#128712; the host is always X, the guest is always O</pre>
+            </div>
         </div>
         <div id="game-board__wrapper">
             <div id="game-board">

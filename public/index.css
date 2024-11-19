@@ -23,11 +23,16 @@ body {
 }
 #game-control-panel {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin: 1vw;
 }
 button {
     width: 10vw;
+}
+pre {
+    margin:0;
+    font-size: 2vh;
 }
 h3 {
     display: flex;
