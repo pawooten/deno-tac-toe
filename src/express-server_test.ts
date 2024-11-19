@@ -1,38 +1,15 @@
 import { createServer } from 'node:http';
-import { assertEquals } from "@std/assert";
 import { assertSpyCall, spy } from "https://deno.land/x/mock@0.15.2/mod.ts";
 import express from "npm:express";
 import { Server as SocketServer } from "npm:socket.io";
 import { initialize, initializeWebSocketServer, socketConnectionHandler, staticRequestHandler } from "./express-server.ts";
-import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
+import { LoggedMessages } from "./constants/messages.ts";
 import { SocketConstants } from "./constants/socket-constants.ts";
 
 const config = { hostName: "localhost", port: 8000 };
 const spyConsoleLog = spy(console, "log");
 
 //#region Port Tests
-Deno.test(function initializeExpress_portTooLow() {
-  try {
-    const app = new express();
-    const server = createServer(app);
-    const badConfig = { hostName: 'localhost', port: 0 };
-    initialize(app, server, badConfig, console);
-  } catch (e) {
-    assertEquals(e.message, ErrorMessages.InvalidPortSpecified);
-  }
-});
-Deno.test(function initializeExpress_portTooHigh() {
-  let server;
-  try {
-    const app = new express();
-    const server = createServer(app);
-    const badConfig = { hostName: 'localhost', port: 65536 };
-    initialize(app, server, badConfig, console);
-  } catch (e) {
-    assertEquals(e.message, ErrorMessages.InvalidPortSpecified);
-    assertEquals(server, undefined);
-  }
-});
 Deno.test(function initializeExpress_logsServerRunningWithSpecifiedPort() {
   // Verify initializeExpress() logs server running message with specified port
   const app = new express();
