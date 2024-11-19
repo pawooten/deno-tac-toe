@@ -1,13 +1,19 @@
+import { ServerConfig } from "../../server-config.ts";
 import { SocketConstants } from "../constants/socket-constants.ts";
 import { BaseHandler } from "./base-handler.ts";
-
+import { Socket } from "npm:socket.io";
 export class GameHostHandler extends BaseHandler {
+    private config: ServerConfig;
+
+    constructor(socket: Socket, config: ServerConfig) {
+        super(socket);
+        this.config = config;
+    }
     public handle(): void {
-        console.log(`Game host handler called`);
         // TODO, surrender existing game as the user has decided to host
         
         const gameId =  crypto.randomUUID();
-        const gameUrl = `http://localhost:8000?gameId=${gameId}`; // TODO hardcoded port
+        const gameUrl = `http://${this.config.hostName}:${this.config.port}?g=${gameId}`;
         this.socket.emit(SocketConstants.HostGame, gameUrl);;
     }
 };
