@@ -26,6 +26,9 @@ body {
     justify-content: center;
     margin: 1vw;
 }
+button {
+    width: 10vw;
+}
 h3 {
     display: flex;
     justify-content: center;

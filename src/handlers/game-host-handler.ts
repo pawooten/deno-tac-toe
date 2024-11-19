@@ -7,6 +7,7 @@ export class GameHostHandler extends BaseHandler {
         // TODO, surrender existing game as the user has decided to host
         
         const gameId =  crypto.randomUUID();
-        this.socket.emit(SocketConstants.HostGame, gameId);;
+        const gameUrl = `http://localhost:8000?gameId=${gameId}`; // TODO hardcoded port
+        this.socket.emit(SocketConstants.HostGame, gameUrl);;
     }
 };
