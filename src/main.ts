@@ -1,6 +1,6 @@
 import express from "npm:express";
 import { createServer } from "node:http";
-import { ServerInitializer } from "./express-server.ts";
+import { ServerInitializer } from "./server-initializer.ts";
 
 const config = { hostName: "localhost", port: 8000 };
 const app: express.Express = express();
