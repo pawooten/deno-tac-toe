@@ -7,6 +7,7 @@ import { initialize, initializeWebSocketServer, socketConnectionHandler, staticR
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 import { SocketConstants } from "./constants/socket-constants.ts";
 
+const config = { hostName: "localhost", port: 8000 };
 const spyConsoleLog = spy(console, "log");
 
 //#region Port Tests
@@ -14,8 +15,8 @@ Deno.test(function initializeExpress_portTooLow() {
   try {
     const app = new express();
     const server = createServer(app);
-    const badPort = 0;
-    initialize(app, server, badPort, console);
+    const badConfig = { hostName: 'localhost', port: 0 };
+    initialize(app, server, badConfig, console);
   } catch (e) {
     assertEquals(e.message, ErrorMessages.InvalidPortSpecified);
   }
@@ -25,8 +26,8 @@ Deno.test(function initializeExpress_portTooHigh() {
   try {
     const app = new express();
     const server = createServer(app);
-    const badPort = 65536;
-    initialize(app, server, badPort, console);
+    const badConfig = { hostName: 'localhost', port: 65536 };
+    initialize(app, server, badConfig, console);
   } catch (e) {
     assertEquals(e.message, ErrorMessages.InvalidPortSpecified);
     assertEquals(server, undefined);
@@ -36,22 +37,22 @@ Deno.test(function initializeExpress_logsServerRunningWithSpecifiedPort() {
   // Verify initializeExpress() logs server running message with specified port
   const app = new express();
   const server = createServer(app);
-  const port = 8000;
-  initialize(app, server, port, console);
+  const config = { hostName: 'localhost', port: 8000 };
+  initialize(app, server, config, console);
   server.close();
   assertSpyCall(spyConsoleLog, 0, { args: [LoggedMessages.WebSocketServerInitialized ] });
-  const expectedLoggedMessage = `${LoggedMessages.ServerRunning}${port}`;
+  const expectedLoggedMessage = `${LoggedMessages.ServerRunning}http://${config.hostName}:${config.port}`;
   assertSpyCall(spyConsoleLog, 1, { args: [expectedLoggedMessage] });
 });
 Deno.test(function initializeExpress_listensToSpecifiedPort() {
   // Verify initializeExpress() calls listen() with specified port and returns server instance returned by listen()
   const app = new express();
   const server = createServer(app);
-  const port = 8000;
   const spyServerListen = spy(server, "listen");
-  initialize(app, server, port, console);
+  const config = { hostName: 'localhost', port: 8000 };
+  initialize(app, server, config, console);
   server.close();
-  assertSpyCall(spyServerListen, 0, { args: [port], returned: server });
+  assertSpyCall(spyServerListen, 0, { args: [config.port, config.hostName] });
 });
 //#endregion
 
@@ -60,9 +61,8 @@ Deno.test(function initializeExpress_servesStaticFiles() {
   // Verify initializeExpress() calls use() with static handler
   const app = new express();
   const server = createServer(app);
-  const port = 8000;
   const spyAppUse = spy(app, "use");
-  initialize(app, server, port, console);
+  initialize(app, server, config, console);
   server.close();
   assertSpyCall(spyAppUse, 0, { args: [staticRequestHandler] });
 });

@@ -7,17 +7,18 @@ import { ServerConstants } from "./constants/server-constants.ts";
 import { SocketConstants } from "./constants/socket-constants.ts";
 import { CellSelectionHandler } from "./handlers/cell-selection-handler.ts";
 import { GameHostHandler } from "./handlers/game-host-handler.ts";
-export const initialize = (app: express.Express, server: Server, port: number, console: Console): void => {
-    if (port < ServerConstants.minPort || port > ServerConstants.maxPort) {
+import { ServerConfig } from "../server-config.ts";
+export const initialize = (app: express.Express, server: Server, config: ServerConfig, console: Console): void => {
+    if (config.port < ServerConstants.minPort || config.port > ServerConstants.maxPort) {
         throw new Error(ErrorMessages.InvalidPortSpecified);
     }
 
     app.use(staticRequestHandler);
     const socketServer = new SocketServer(server, { serveClient: false });
     initializeWebSocketServer(socketServer, console);
-    server.listen(port);
+    server.listen(config.port, config.hostName);
 
-    console.log(`${LoggedMessages.ServerRunning}${port}`);
+    console.log(`${LoggedMessages.ServerRunning}http://${config.hostName}:${config.port}`);
 };
 
 export const staticRequestHandler = express.static(ServerConstants.Public);
