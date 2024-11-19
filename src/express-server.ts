@@ -6,7 +6,7 @@ import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 import { ServerConstants } from "./constants/server-constants.ts";
 import { SocketConstants } from "./constants/socket-constants.ts";
 import { CellSelectionHandler } from "./cell-selection-handler.ts";
-
+import { GameHostHandler } from "./game-host-handler.ts";
 export const initialize = (app: express.Express, server: Server, port: number, console: Console): void => {
     if (port < ServerConstants.minPort || port > ServerConstants.maxPort) {
         throw new Error(ErrorMessages.InvalidPortSpecified);
@@ -23,9 +23,11 @@ export const initialize = (app: express.Express, server: Server, port: number, c
 export const staticRequestHandler = express.static(ServerConstants.Public);
 
 export const socketConnectionHandler = (socket: Socket) => {
-  const handler = new CellSelectionHandler(socket);
+  const gameHostHandler = new GameHostHandler(socket);
+  const selectionHandler = new CellSelectionHandler(socket);
   console.log(LoggedMessages.WebSocketConnection);
-  socket.on(SocketConstants.CellSelected, (selectedCell: string) => handler.handleSelection(selectedCell));
+  socket.on(SocketConstants.CellSelected, (selectedCell: string) => selectionHandler.handle(selectedCell));
+  socket.on(SocketConstants.HostGame, () => gameHostHandler.handle());
 };
 
 export const initializeWebSocketServer = (socketServer: SocketServer, console: Console) => {
