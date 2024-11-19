@@ -1,4 +1,5 @@
 export const SocketConstants = {
     Connection: 'connection',
-    CellSelected: 'cell-selected'
+    CellSelected: 'cell-selected',
+    CellMarked: 'cell-marked',
 };

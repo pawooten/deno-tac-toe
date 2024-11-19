@@ -7,14 +7,19 @@ body {
 }
 #game-board {
     background-color: aqua;
+    display: flex;
 }
 .game-board-cell {
     width: 10vw;
     height: 10vw;
+    font-size: 10vw;
     margin: 1vw;
     background-color: lightgray;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    border: 1px solid black;
 }
 h3 {
     display: flex;
