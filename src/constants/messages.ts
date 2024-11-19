@@ -1,4 +1,6 @@
 export class ErrorMessages {
+    static readonly NoServerConfigSpecified = "No server configuration specified";
+    static readonly InvalidHostnameSpecified = "Invalid hostname specified";
     static readonly InvalidPortSpecified = "Invalid port specified";
 }
 export class LoggedMessages {
