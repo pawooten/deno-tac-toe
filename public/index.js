@@ -14,6 +14,7 @@ socket.on('host-game', (gameId, gameUrl) => {
 });
 socket.on('join-game', (gameId) => {
     currentGame = gameId;
+    $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusElement.innerHTML = `Joined as guest of game ${gameId}`;
 });
 // DOM Elements
@@ -26,15 +27,16 @@ for( const cell of window.document.querySelectorAll('.game-board-cell')) {
         }
     });
 }
+const $errorMessageElement = window.document.getElementById('error-message');
+const $errorPopoverElement = window.document.getElementById('error-popover');
+const $gameBoardWrapperElement = window.document.getElementById('game-board__wrapper');
+const $gameIdInputElement = window.document.getElementById('game-id-input');
+const $gameStatusElement = window.document.getElementById('game-control-panel__gameStatus');
 const $hostButtonElement = window.document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
     socket.emit('host-game');
 });
 const $joinButtonElement = window.document.getElementById('join-button');
-const $gameIdInputElement = window.document.getElementById('game-id-input');
-const $gameStatusElement = window.document.getElementById('game-control-panel__gameStatus');
-const $errorMessageElement = window.document.getElementById('error-message');
-const $errorPopoverElement = window.document.getElementById('error-popover');
 
 // Game logic
 let currentGame;
@@ -42,6 +44,7 @@ let currentGame;
 const hostGame = async (gameId, gameUrl) => {
     $gameStatusElement.innerHTML = `Hosting game ${gameId}`;
     currentGame = gameId;
+    $gameBoardWrapperElement.classList.remove('disabled');
     $gameIdInputElement.disabled = true;
     $joinButtonElement.disabled = true;
     for (const cell of $cellDivElements.values()) {
