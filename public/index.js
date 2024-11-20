@@ -4,10 +4,12 @@ socket.on('cell-marked', (cellId, mark) => {
     const cell = $cellDivElements.get(cellId);
     cell.innerHTML = mark;
 });
-socket.on('host-game', (gameUrl) => {
-    hostGame(gameUrl);
+socket.on('host-game', (gameId, gameUrl) => {
+    hostGame(gameId, gameUrl);
 });
-
+socket.on('join-game', (gameId) => {
+    $gameStatusElement.innerHTML = `Joined as guest of game ${gameId}`;
+});
 // DOM Elements
 const $cellDivElements = new Map();
 for( const cell of window.document.querySelectorAll('.game-board-cell')) {
@@ -22,9 +24,10 @@ $hostButtonElement.addEventListener('click', () => {
 });
 const $joinButtonElement = window.document.getElementById('join-button');
 const $gameIdInputElement = window.document.getElementById('game-id-input');
-
+const $gameStatusElement = window.document.getElementById('game-control-panel__gameStatus');
 // Game logic
-const hostGame = async (gameUrl) => {
+const hostGame = async (gameId, gameUrl) => {
+    $gameStatusElement.innerHTML = `Hosting game ${gameId}`;
     try {
         $gameIdInputElement.disabled = true;
         $joinButtonElement.disabled = true;
