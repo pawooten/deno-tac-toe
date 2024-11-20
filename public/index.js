@@ -1,3 +1,4 @@
+// Websocket event binding
 const socket = io();
 socket.on('cell-marked', (cellId, mark) => {
     const cell = $cellDivElements.get(cellId);
@@ -6,15 +7,8 @@ socket.on('cell-marked', (cellId, mark) => {
 socket.on('host-game', (gameUrl) => {
     hostGame(gameUrl);
 });
-const hostGame = async (gameUrl) => {
-    try {
-        $gameIdInputElement.disabled = true;
-        $joinButtonElement.disabled = true;
-        await navigator.clipboard.writeText(gameUrl);
-      } catch (error) {
-        console.error(error.message);
-      }
-};
+
+// DOM Elements
 const $cellDivElements = new Map();
 for( const cell of window.document.querySelectorAll('.game-board-cell')) {
     $cellDivElements.set(cell.id, cell);
@@ -28,3 +22,31 @@ $hostButtonElement.addEventListener('click', () => {
 });
 const $joinButtonElement = window.document.getElementById('join-button');
 const $gameIdInputElement = window.document.getElementById('game-id-input');
+
+// Game logic
+const hostGame = async (gameUrl) => {
+    try {
+        $gameIdInputElement.disabled = true;
+        $joinButtonElement.disabled = true;
+        await navigator.clipboard.writeText(gameUrl);
+      } catch (error) {
+        console.error(error.message);
+      }
+};
+const joinGame = (gameId) => {
+    console.log('Joining game', gameId);
+    socket.emit('join-game', gameId);
+};
+const parseGameId = () => {
+    for (const keyValuePair of location.search.slice(1).split('&')) {
+        const [key, value] = keyValuePair.split('=');
+        if (key === 'g') {
+            return value;
+        }
+    }
+    return null;
+};
+const queryStringGameId = parseGameId();
+if (queryStringGameId) {
+    joinGame(queryStringGameId);
+}

@@ -3,4 +3,5 @@ export const SocketConstants = {
     CellSelected: 'cell-selected',
     CellMarked: 'cell-marked',
     HostGame: 'host-game',
+    JoinGame: 'join-game',
 };
