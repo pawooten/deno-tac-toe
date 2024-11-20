@@ -1,5 +1,6 @@
 export class ErrorMessages {
     static readonly NoServerConfigSpecified = "No server configuration specified";
+    static readonly NoSocketServerSpecified = "No socket server specified";
     static readonly InvalidHostnameSpecified = "Invalid hostname specified";
     static readonly InvalidPortSpecified = "Invalid port specified";
     static readonly GameNotFound = "Game not found";

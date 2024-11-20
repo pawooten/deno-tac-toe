@@ -6,10 +6,11 @@ export class GameJoinHandler extends BaseHandler {
         console.log(`Joining game with id: ${gameId}`);
         try {
             this.manager.join(gameId, this.socket.id);
+            this.socket.emit(SocketConstants.JoinGame, gameId);
+            this.socket.join(gameId);
         } catch (error) {
             console.error(error);
             this.socket.emit(SocketConstants.Error, error.message);
         }
-        this.socket.emit(SocketConstants.JoinGame, gameId);
     }
 }
