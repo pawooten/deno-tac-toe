@@ -36,6 +36,10 @@ export class GameManager {
         if (!game) {
             throw new Error(`${ErrorMessages.GameNotFound} ${gameId}`);
         }
+        if (game.guest) {
+            // Another user has already joined the specified game
+            throw new Error(ErrorMessages.UnableToJoinGame);
+        }
         game.guest = guest;
         return gameId;
     }
