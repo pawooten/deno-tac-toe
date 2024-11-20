@@ -36,9 +36,12 @@ const $errorPopoverElement = window.document.getElementById('error-popover');
 // Game logic
 const hostGame = async (gameId, gameUrl) => {
     $gameStatusElement.innerHTML = `Hosting game ${gameId}`;
+    $gameIdInputElement.disabled = true;
+    $joinButtonElement.disabled = true;
+    for (const cell of $cellDivElements.values()) {
+        cell.innerHTML = '';
+    }
     try {
-        $gameIdInputElement.disabled = true;
-        $joinButtonElement.disabled = true;
         await navigator.clipboard.writeText(gameUrl);
       } catch (error) {
         console.error(error.message);
