@@ -5,6 +5,14 @@ export class GameManager {
     private games: Map<string, GameState> = new Map<string, GameState>();
     private gameIDsByPlayer: Map<string, string> = new Map<string, string>();
 
+    public get(id: string): GameState {
+        const game = this.games.get(id);
+        if (!game) {
+            throw new Error(`${ErrorMessages.GameNotFound} ${id}`);
+        }
+        return game;
+    }
+
     public host(host: string): string {
         const id =  crypto.randomUUID();
         const game: GameState = {

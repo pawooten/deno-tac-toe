@@ -13,6 +13,7 @@ socket.on('host-game', (gameId, gameUrl) => {
     hostGame(gameId, gameUrl);
 });
 socket.on('join-game', (gameId) => {
+    currentGame = gameId;
     $gameStatusElement.innerHTML = `Joined as guest of game ${gameId}`;
 });
 // DOM Elements
@@ -20,7 +21,9 @@ const $cellDivElements = new Map();
 for( const cell of window.document.querySelectorAll('.game-board-cell')) {
     $cellDivElements.set(cell.id, cell);
     cell.addEventListener('click', (ev) => {
-        socket.emit('cell-selected', ev.target.id);
+        if (currentGame) {
+            socket.emit('cell-selected', currentGame, ev.target.id);
+        }
     });
 }
 const $hostButtonElement = window.document.getElementById('host-button');
@@ -34,8 +37,11 @@ const $errorMessageElement = window.document.getElementById('error-message');
 const $errorPopoverElement = window.document.getElementById('error-popover');
 
 // Game logic
+let currentGame;
+
 const hostGame = async (gameId, gameUrl) => {
     $gameStatusElement.innerHTML = `Hosting game ${gameId}`;
+    currentGame = gameId;
     $gameIdInputElement.disabled = true;
     $joinButtonElement.disabled = true;
     for (const cell of $cellDivElements.values()) {
