@@ -2,6 +2,7 @@ export class ErrorMessages {
     static readonly NoServerConfigSpecified = "No server configuration specified";
     static readonly InvalidHostnameSpecified = "Invalid hostname specified";
     static readonly InvalidPortSpecified = "Invalid port specified";
+    static readonly GameNotFound = "Game not found";
 }
 export class LoggedMessages {
     static readonly ServerRunning = 'Server running on ';

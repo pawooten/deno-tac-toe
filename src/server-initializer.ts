@@ -10,17 +10,20 @@ import { GameHostHandler } from "./handlers/game-host-handler.ts";
 import { ServerConfig } from "../server-config.ts";
 import { validateServerConfig } from "./utilities/server-config-validator.ts";
 import { GameJoinHandler } from "./handlers/game-join-handler.ts";
+import { GameManager } from "./game-manager.ts";
 
 export const staticRequestHandler = express.static(ServerConstants.Public);
 
 export class ServerInitializer {
   private config: ServerConfig;
   private console: Console;
-  
+  private manager: GameManager;
+
   constructor(config: ServerConfig, console: Console) {
     validateServerConfig(config);
     this.config = config;
     this.console = console;
+    this.manager = new GameManager();
   }
 
   initialize(app: express.Express, server: Server) {
@@ -37,9 +40,9 @@ export class ServerInitializer {
   }
 
   private socketConnectionHandler = (socket: Socket) => {
-    const gameHostHandler = new GameHostHandler(socket, this.config);
-    const gameJoinHandler = new GameJoinHandler(socket);
-    const selectionHandler = new CellSelectionHandler(socket);
+    const gameHostHandler = new GameHostHandler(socket, this.config, this.manager);
+    const gameJoinHandler = new GameJoinHandler(socket, this.manager);
+    const selectionHandler = new CellSelectionHandler(socket, this.manager);
     console.log(LoggedMessages.WebSocketConnection);
     socket.on(SocketConstants.CellSelected, (selectedCell: string) => selectionHandler.handle(selectedCell));
     socket.on(SocketConstants.HostGame, () => gameHostHandler.handle());
