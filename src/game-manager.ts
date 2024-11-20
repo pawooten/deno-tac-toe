@@ -26,7 +26,7 @@ export class GameManager {
     public join(gameId: string, guest: string): string {
         const game = this.games.get(gameId);
         if (!game) {
-            throw new Error(ErrorMessages.GameNotFound);
+            throw new Error(`${ErrorMessages.GameNotFound} ${gameId}`);
         }
         game.guest = guest;
         return gameId;

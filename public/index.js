@@ -4,6 +4,11 @@ socket.on('cell-marked', (cellId, mark) => {
     const cell = $cellDivElements.get(cellId);
     cell.innerHTML = mark;
 });
+socket.on('error', (message) => {
+    console.error(message);
+    $errorMessageElement.innerHTML = message;
+    $errorPopoverElement.showPopover();
+});
 socket.on('host-game', (gameId, gameUrl) => {
     hostGame(gameId, gameUrl);
 });
@@ -25,6 +30,9 @@ $hostButtonElement.addEventListener('click', () => {
 const $joinButtonElement = window.document.getElementById('join-button');
 const $gameIdInputElement = window.document.getElementById('game-id-input');
 const $gameStatusElement = window.document.getElementById('game-control-panel__gameStatus');
+const $errorMessageElement = window.document.getElementById('error-message');
+const $errorPopoverElement = window.document.getElementById('error-popover');
+
 // Game logic
 const hostGame = async (gameId, gameUrl) => {
     $gameStatusElement.innerHTML = `Hosting game ${gameId}`;
