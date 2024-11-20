@@ -8,6 +8,8 @@ socket.on('host-game', (gameUrl) => {
 });
 const hostGame = async (gameUrl) => {
     try {
+        $gameIdInputElement.disabled = true;
+        $joinButtonElement.disabled = true;
         await navigator.clipboard.writeText(gameUrl);
       } catch (error) {
         console.error(error.message);
@@ -24,3 +26,5 @@ const $hostButtonElement = window.document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
     socket.emit('host-game');
 });
+const $joinButtonElement = window.document.getElementById('join-button');
+const $gameIdInputElement = window.document.getElementById('game-id-input');
