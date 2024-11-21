@@ -5,7 +5,7 @@ socket.on('cell-marked', (cellId, mark) => {
     cell.innerHTML = mark;
 });
 socket.on('error', (message) => showError(message));
-socket.on('host-game', (gameId, gameUrl) => {
+socket.on('host-game-accepted', (gameId, gameUrl) => {
     hostGame(gameId, gameUrl);
 });
 socket.on('join-game', (gameId) => {
@@ -43,7 +43,7 @@ const $gameIdInputElement = window.document.getElementById('game-id-input');
 const $gameStatusElement = window.document.getElementById('game-control-panel__gameStatus');
 const $hostButtonElement = window.document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
-    socket.emit('host-game');
+    socket.emit('request-host-game');
 });
 const $joinButtonElement = window.document.getElementById('join-button');
 

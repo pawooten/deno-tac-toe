@@ -14,6 +14,6 @@ export class GameHostHandler extends BaseHandler {
         // TODO, surrender existing game as the user has decided to host
         const gameId = this.manager.host(this.socket.id);
         this.socket.join(gameId);
-        this.socket.emit(SocketEvents.HostGame, gameId, `http://${this.config.hostName}:${this.config.port}?g=${gameId}`);
+        this.socket.emit(SocketEvents.Server.HostGameAccepted, gameId, `http://${this.config.hostName}:${this.config.port}?g=${gameId}`);
     }
 };

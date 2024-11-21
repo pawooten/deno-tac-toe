@@ -5,6 +5,13 @@ export const SocketEvents = {
         Connection: 'connection',
         // The host or guest user has clicked a cell in an attempt to mark it
         CellSelected: 'cell-selected',
+        // A user has requested to host a new game
+        RequestHostGame: 'request-host-game'
+    },
+    // Events emitted from the server to the client which sent the request
+    Server: {
+        // The request to host a new game has been accepted
+        HostGameAccepted: 'host-game-accepted',
     },
     // Events emitted from the server to both clients
     ServerBroadcast: {
@@ -15,8 +22,6 @@ export const SocketEvents = {
     },
     // Emitted from server to the client which sent the request when an error occurs
     Error: 'error',
-    // Emitted from client to server when the user hosts a new game
-    HostGame: 'host-game',
     // Emitted from client to server when the user attempts to join an existing game as guest and
     // from server to guest client when a guest joins a game
     JoinGame: 'join-game', 
