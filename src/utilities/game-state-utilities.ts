@@ -1,29 +1,20 @@
+import { GameThemes } from "../../public/socket-events.js";
 import { ErrorMessages } from "../constants/messages.ts";
 import { GameState } from "../game-state.ts";
 
-export const themes = {
-    burgerVsPizza: 'burger-vs-pizza',
-    classic: 'classic',
-    clownVsVomit: 'clown-vs-vomit',
-    devilVsAngel: 'devil-vs-angel',
-    dizzyVsMindBlown: 'dizzy-vs-mind-blown',
-    dogVsCat: 'dog-vs-cat',
-    guitarVsMic: 'guitar-vs-mic',
-    meatVsSalad: 'meat-vs-salad',
-};
 const defaultMarks = ['X', 'O'];
 const themeMarks = new Map([
-    [themes.burgerVsPizza, ['&#127828;', '&#127829;']],
-    [themes.classic, defaultMarks],
-    [themes.clownVsVomit, ['&#129313;', '&#129326;']],
-    [themes.devilVsAngel, ['&#128520;', '&#128519;']],
-    [themes.dizzyVsMindBlown, ['&#128565;', '&#129327;']],
-    [themes.dogVsCat, ['&#128021;', '&#128008;']],
-    [themes.guitarVsMic, ['&#127928;', '&#127908;']],
-    [themes.meatVsSalad, ['&#129385;', '&#129367;']],
+    [GameThemes.burgerVsPizza, ['&#127828;', '&#127829;']],
+    [GameThemes.classic, defaultMarks],
+    [GameThemes.clownVsVomit, ['&#129313;', '&#129326;']],
+    [GameThemes.devilVsAngel, ['&#128520;', '&#128519;']],
+    [GameThemes.dizzyVsMindBlown, ['&#128565;', '&#129327;']],
+    [GameThemes.dogVsCat, ['&#128021;', '&#128008;']],
+    [GameThemes.guitarVsMic, ['&#127928;', '&#127908;']],
+    [GameThemes.meatVsSalad, ['&#129385;', '&#129367;']],
 ]);
 export const getUserMark = (game: GameState, user: string): string => {
-    const marks = themeMarks.get(themes.meatVsSalad) || defaultMarks;
+    const marks = themeMarks.get(GameThemes.meatVsSalad) || defaultMarks;
     const [x, o] = marks;
     return game.host === user ? x: o;
 

@@ -27,3 +27,13 @@ export const SocketEvents = {
         GuestJoined: 'guest-joined',
     }
 };
+export const GameThemes = {
+    burgerVsPizza: 'burger-vs-pizza',
+    classic: 'classic',
+    clownVsVomit: 'clown-vs-vomit',
+    devilVsAngel: 'devil-vs-angel',
+    dizzyVsMindBlown: 'dizzy-vs-mind-blown',
+    dogVsCat: 'dog-vs-cat',
+    guitarVsMic: 'guitar-vs-mic',
+    meatVsSalad: 'meat-vs-salad',
+};
