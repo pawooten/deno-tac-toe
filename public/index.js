@@ -21,20 +21,21 @@ socket.on(SocketEvents.ServerBroadcast.GuestJoined, () => {
     $errorPopoverElement.hidePopover();
 });
 // DOM Elements
+const onCellClick = (ev) => {
+    if (!currentGame) {
+        showError('No game in progress. Host or join a game as a guest');
+        return;
+    }
+    if (!guestJoined) {
+        showError('A game has been hosted but no guest has joined yet');
+        return;
+    }
+    socket.emit(SocketEvents.Client.CellSelected, currentGame, ev.target.id);
+};
 const $cellDivElements = new Map();
 for( const cell of window.document.querySelectorAll('.game-board-cell')) {
     $cellDivElements.set(cell.id, cell);
-    cell.addEventListener('click', (ev) => {
-        if (!currentGame) {
-            showError('No game in progress. Host or join a game as a guest');
-            return;
-        }
-        if (!guestJoined) {
-            showError('A game has been hosted but no guest has joined yet');
-            return;
-        }
-        socket.emit(SocketEvents.Client.CellSelected, currentGame, ev.target.id);
-    });
+    cell.addEventListener('click', onCellClick);
 }
 const $errorMessageElement = window.document.getElementById('error-message');
 const $errorPopoverElement = window.document.getElementById('error-popover');
