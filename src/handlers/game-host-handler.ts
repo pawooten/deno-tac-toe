@@ -1,6 +1,6 @@
 import { GameManager } from "../game-manager.ts";
 import { ServerConfig } from "../../server-config.ts";
-import { SocketEvents } from "../../public/socket-events.js";
+import { SocketEvents } from "../../public/constants.js";
 import { BaseHandler } from "./base-handler.ts";
 import { Server, Socket } from "npm:socket.io";
 export class GameHostHandler extends BaseHandler {

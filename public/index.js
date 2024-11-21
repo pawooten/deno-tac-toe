@@ -1,4 +1,4 @@
-import { SocketEvents } from "./socket-events.js";
+import { SocketEvents } from "./constants.js";
 // Websocket event binding
 const socket = io();
 socket.on(SocketEvents.ServerBroadcast.CellMarked, (cellId, mark) => {

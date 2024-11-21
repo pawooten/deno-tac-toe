@@ -1,4 +1,4 @@
-import { SocketEvents } from "../../public/socket-events.js";
+import { SocketEvents } from "../../public/constants.js";
 import { getCellIndices, getUserMark } from "../utilities/game-state-utilities.ts";
 import { BaseHandler } from "./base-handler.ts";
 import { ErrorMessages } from "../constants/messages.ts";

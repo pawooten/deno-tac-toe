@@ -1,4 +1,4 @@
-import { GameThemes } from "../../public/socket-events.js";
+import { GameThemes } from "../../public/constants.js";
 import { ErrorMessages } from "../constants/messages.ts";
 import { GameState } from "../game-state.ts";
 
