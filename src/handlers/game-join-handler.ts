@@ -11,7 +11,7 @@ export class GameJoinHandler extends BaseHandler {
             this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.GuestJoined);
         } catch (error) {
             console.error(error);
-            this.socket.emit(SocketEvents.Error, error.message);
+            this.socket.emit(SocketEvents.Server.Error, error.message);
         }
     }
 }

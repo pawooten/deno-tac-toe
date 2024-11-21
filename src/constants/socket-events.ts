@@ -10,6 +10,8 @@ export const SocketEvents = {
     },
     // Events emitted from the server to the client which sent the request
     Server: {
+        // An error has occurred
+        Error: 'error',
         // The request to host a new game has been accepted
         HostGameAccepted: 'host-game-accepted',
     },
@@ -20,8 +22,6 @@ export const SocketEvents = {
         // A guest has joined the game
         GuestJoined: 'guest-joined',
     },
-    // Emitted from server to the client which sent the request when an error occurs
-    Error: 'error',
     // Emitted from client to server when the user attempts to join an existing game as guest and
     // from server to guest client when a guest joins a game
     JoinGame: 'join-game', 

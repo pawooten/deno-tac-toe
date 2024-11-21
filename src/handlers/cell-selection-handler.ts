@@ -13,11 +13,11 @@ export class CellSelectionHandler extends BaseHandler {
             const currentCellValue = game.cells[cellRow][cellColumn];
             if (currentCellValue === mark) {
                 // The cell
-                this.socket.emit(SocketEvents.Error, ErrorMessages.DuplicateCellSelected);
+                this.socket.emit(SocketEvents.Server.Error, ErrorMessages.DuplicateCellSelected);
                 return;
             }
             if (currentCellValue) {
-                this.socket.emit(SocketEvents.Error, ErrorMessages.CellAlreadySelected);
+                this.socket.emit(SocketEvents.Server.Error, ErrorMessages.CellAlreadySelected);
                 return;
             }
             game.cells[cellRow][cellColumn] = mark;
@@ -25,7 +25,7 @@ export class CellSelectionHandler extends BaseHandler {
 
             this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.CellMarked, selectedCell, mark);
         } catch (error) {
-            this.socket.emit(SocketEvents.Error, error.message);
+            this.socket.emit(SocketEvents.Server.Error, error.message);
         }
     }
 };
