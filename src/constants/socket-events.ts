@@ -1,14 +1,20 @@
 export const SocketEvents = {
-    // Emitted when a client connects to the server with a new ws connection
-    Connection: 'connection',
-    // Emitted when the user clicks a cell to attempt to mark it
-    CellSelected: 'cell-selected',
-    // Emitted from server to both clients when a cell is marked by either player
-    CellMarked: 'cell-marked',
+    // Events emitted from the client to the server
+    Client: {
+        // A new ws connection has been established
+        Connection: 'connection',
+        // The host or guest user has clicked a cell in an attempt to mark it
+        CellSelected: 'cell-selected',
+    },
+    // Events emitted from the server to both clients
+    ServerBroadcast: {
+        // A cell has been marked by either player
+        CellMarked: 'cell-marked',
+        // A guest has joined the game
+        GuestJoined: 'guest-joined',
+    },
     // Emitted from server to the client which sent the request when an error occurs
     Error: 'error',
-    // Emitted from server to both clients when the guest joins the game
-    GuestJoined: 'guest-joined',
     // Emitted from client to server when the user hosts a new game
     HostGame: 'host-game',
     // Emitted from client to server when the user attempts to join an existing game as guest and

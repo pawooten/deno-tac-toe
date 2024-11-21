@@ -39,7 +39,7 @@ export class ServerInitializer {
     if (!this.socketServer) {
       throw new Error(ErrorMessages.NoSocketServerSpecified);
     }
-    this.socketServer.on(SocketEvents.Connection, this.socketConnectionHandler);
+    this.socketServer.on(SocketEvents.Client.Connection, this.socketConnectionHandler);
     console.log(LoggedMessages.WebSocketServerInitialized);
   }
 
@@ -51,7 +51,7 @@ export class ServerInitializer {
     const gameJoinHandler = new GameJoinHandler(socket, this.socketServer, this.manager);
     const selectionHandler = new CellSelectionHandler(socket, this.socketServer, this.manager);
     console.log(LoggedMessages.WebSocketConnection);
-    socket.on(SocketEvents.CellSelected, (gameId: string, selectedCell: string) => selectionHandler.handle(gameId, selectedCell));
+    socket.on(SocketEvents.Client.CellSelected, (gameId: string, selectedCell: string) => selectionHandler.handle(gameId, selectedCell));
     socket.on(SocketEvents.HostGame, () => gameHostHandler.handle());
     socket.on(SocketEvents.JoinGame, (gameId: string) => gameJoinHandler.handle(gameId));
   };
