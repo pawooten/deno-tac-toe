@@ -13,6 +13,9 @@ body {
 .disabled {
     opacity: 20%;
 }
+.unselectable {
+    user-select: none;
+}
 .game-board-cell {
     width: 10vw;
     height: 10vw;

@@ -7,7 +7,7 @@
         <script type="module" src="./index.js" async></script>
     </head>
     <body>
-        <h3>	
+        <h3 class="unselectable">	
             &#65283; Deno-Tac-Toe
         </h3>
         <pre id="game-control-panel__gameStatus">&#128308; No game. Host or join a game</pre>
@@ -19,7 +19,7 @@
                     <input type="text" id="game-id-input" placeholder="Join Code">        
                 </span>
             </div>
-            <div id="game-control-panel__subtitle">
+            <div id="game-control-panel__subtitle" class="unselectable">
                 <pre>&#128712; The host is always X, the guest is always O.</pre>
             </div>
         </div>
@@ -42,11 +42,11 @@
                 </div>
             </div>    
         </div>
-        <span popover id="game-host-popover">	
+        <span popover id="game-host-popover" class="unselectable">	
             Hosted game URL copied to clipboard!	
             &#128077;
         </span>
-        <span popover id="error-popover">
+        <span popover id="error-popover" class="unselectable">
             <span id="error-message">An error has occurred</span>
             &#128557;
         </span>
