@@ -48,7 +48,9 @@ $hostButtonElement.addEventListener('click', () => {
     socket.emit(SocketEvents.Client.RequestHostGame);
 });
 const $joinButtonElement = window.document.getElementById('join-button');
-
+$joinButtonElement.addEventListener('click', () => {
+    joinGame($gameIdInputElement.value);
+});
 // Game logic
 let currentGame;
 let guestJoined = false;
