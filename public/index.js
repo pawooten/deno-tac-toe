@@ -1,10 +1,11 @@
+import { SocketEvents } from "./socket-events.js";
 // Websocket event binding
 const socket = io();
 socket.on('cell-marked', (cellId, mark) => {
     const cell = $cellDivElements.get(cellId);
     cell.innerHTML = mark;
 });
-socket.on('error', (message) => showError(message));
+socket.on(SocketEvents.Server.Error, (message) => showError(message));
 socket.on('host-game-accepted', (gameId, gameUrl) => {
     hostGame(gameId, gameUrl);
 });

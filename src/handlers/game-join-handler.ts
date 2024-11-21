@@ -1,4 +1,4 @@
-import { SocketEvents } from "../constants/socket-events.ts";
+import { SocketEvents } from "../../public/socket-events.js";
 import { BaseHandler } from "./base-handler.ts";
 
 export class GameJoinHandler extends BaseHandler {

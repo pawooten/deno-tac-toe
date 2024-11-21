@@ -4,7 +4,7 @@ import { Server as SocketServer, Socket } from "npm:socket.io";
 
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 import { ServerConstants } from "./constants/server-constants.ts";
-import { SocketEvents } from "./constants/socket-events.ts";
+import { SocketEvents } from "../public/socket-events.js";
 import { CellSelectionHandler } from "./handlers/cell-selection-handler.ts";
 import { GameHostHandler } from "./handlers/game-host-handler.ts";
 import { ServerConfig } from "../server-config.ts";
