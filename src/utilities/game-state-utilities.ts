@@ -1,8 +1,24 @@
 import { ErrorMessages } from "../constants/messages.ts";
 import { GameState } from "../game-state.ts";
 
+export const themes = {
+    burgerVsPizza: 'burger-vs-pizza',
+    classic: 'classic',
+    clownVsVomit: 'clown-vs-vomit',
+    dizzyVsMindBlown: 'dizzy-vs-mind-blown'
+};
+const defaultMarks = ['X', 'O'];
+const themeMarks = new Map([
+    [themes.burgerVsPizza, ['&#127828;', '&#127829;']],
+    [themes.classic, defaultMarks],
+    [themes.clownVsVomit, ['&#129313;', '&#129326;']],
+    [themes.dizzyVsMindBlown, ['&#128565;', '&#129327;']]
+]);
 export const getUserMark = (game: GameState, user: string): string => {
-    return game.host === user ? 'X' : 'O';
+    const marks = themeMarks.get(themes.burgerVsPizza) || defaultMarks;
+    const [x, o] = marks;
+    return game.host === user ? x: o;
+
 };
 export const getCellIndices = (cell: string): [number, number] => {
     switch (cell) {
