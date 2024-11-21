@@ -1,20 +1,9 @@
-import { Server, Socket } from "npm:socket.io";
 import { SocketConstants } from "../constants/socket-constants.ts";
 import { getCellIndices, getUserMark } from "../utilities/game-state-utilities.ts";
 import { BaseHandler } from "./base-handler.ts";
-import { GameManager } from "../game-manager.ts";
 import { ErrorMessages } from "../constants/messages.ts";
 
 export class CellSelectionHandler extends BaseHandler {
-    private socketServer: Server;
-
-    constructor(socket: Socket, manager: GameManager, socketServer: Server | undefined) {
-        super(socket, manager);
-        if (!socketServer) {
-            throw new Error(ErrorMessages.NoSocketServerSpecified);
-        }
-        this.socketServer = socketServer;
-    }
 
     public handle(gameId: string, selectedCell: string): void {
         try {

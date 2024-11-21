@@ -4,11 +4,7 @@ socket.on('cell-marked', (cellId, mark) => {
     const cell = $cellDivElements.get(cellId);
     cell.innerHTML = mark;
 });
-socket.on('error', (message) => {
-    console.error(message);
-    $errorMessageElement.innerHTML = message;
-    $errorPopoverElement.showPopover();
-});
+socket.on('error', (message) => showError(message));
 socket.on('host-game', (gameId, gameUrl) => {
     hostGame(gameId, gameUrl);
 });
@@ -17,14 +13,27 @@ socket.on('join-game', (gameId) => {
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusElement.innerHTML = `Joined as guest of game ${gameId}`;
 });
+socket.on('guest-joined', () => {
+    console.log('Guest joined');
+    guestJoined = true;
+    $gameBoardWrapperElement.classList.remove('disabled');
+    $errorPopoverElement.hidePopover();
+
+});
 // DOM Elements
 const $cellDivElements = new Map();
 for( const cell of window.document.querySelectorAll('.game-board-cell')) {
     $cellDivElements.set(cell.id, cell);
     cell.addEventListener('click', (ev) => {
-        if (currentGame) {
-            socket.emit('cell-selected', currentGame, ev.target.id);
+        if (!currentGame) {
+            showError('No game in progress. Host or join a game as a guest');
+            return;
         }
+        if (!guestJoined) {
+            showError('A game has been hosted but no guest has joined yet');
+            return;
+        }
+        socket.emit('cell-selected', currentGame, ev.target.id);
     });
 }
 const $errorMessageElement = window.document.getElementById('error-message');
@@ -40,11 +49,12 @@ const $joinButtonElement = window.document.getElementById('join-button');
 
 // Game logic
 let currentGame;
-
+let guestJoined = false;
 const hostGame = async (gameId, gameUrl) => {
     $gameStatusElement.innerHTML = `Hosting game ${gameId}`;
     currentGame = gameId;
-    $gameBoardWrapperElement.classList.remove('disabled');
+    guestJoined = false;
+    $gameBoardWrapperElement.classList.add('disabled');
     $gameIdInputElement.disabled = true;
     $joinButtonElement.disabled = true;
     for (const cell of $cellDivElements.values()) {
@@ -59,6 +69,11 @@ const hostGame = async (gameId, gameUrl) => {
 const joinGame = (gameId) => {
     console.log('Joining game', gameId);
     socket.emit('join-game', gameId);
+};
+const showError = (message) => {
+    console.error(message);
+    $errorMessageElement.innerHTML = message;
+    $errorPopoverElement.showPopover();
 };
 const parseGameId = () => {
     for (const keyValuePair of location.search.slice(1).split('&')) {

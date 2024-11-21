@@ -44,9 +44,12 @@ export class ServerInitializer {
   }
 
   private socketConnectionHandler = (socket: Socket) => {
-    const gameHostHandler = new GameHostHandler(socket, this.config, this.manager);
-    const gameJoinHandler = new GameJoinHandler(socket, this.manager);
-    const selectionHandler = new CellSelectionHandler(socket, this.manager, this.socketServer);
+    if (!this.socketServer) {
+      throw new Error(ErrorMessages.NoSocketServerSpecified);
+    }
+    const gameHostHandler = new GameHostHandler(socket, this.socketServer, this.config, this.manager);
+    const gameJoinHandler = new GameJoinHandler(socket, this.socketServer, this.manager);
+    const selectionHandler = new CellSelectionHandler(socket, this.socketServer, this.manager);
     console.log(LoggedMessages.WebSocketConnection);
     socket.on(SocketConstants.CellSelected, (gameId: string, selectedCell: string) => selectionHandler.handle(gameId, selectedCell));
     socket.on(SocketConstants.HostGame, () => gameHostHandler.handle());

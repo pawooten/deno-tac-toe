@@ -2,18 +2,18 @@ import { GameManager } from "../game-manager.ts";
 import { ServerConfig } from "../../server-config.ts";
 import { SocketConstants } from "../constants/socket-constants.ts";
 import { BaseHandler } from "./base-handler.ts";
-import { Socket } from "npm:socket.io";
+import { Server, Socket } from "npm:socket.io";
 export class GameHostHandler extends BaseHandler {
     private config: ServerConfig;
 
-    constructor(socket: Socket, config: ServerConfig, manager: GameManager) {
-        super(socket, manager);
+    constructor(socket: Socket, socketServer: Server, config: ServerConfig, manager: GameManager) {
+        super(socket, socketServer, manager);
         this.config = config;
     }
     public handle(): void {
         // TODO, surrender existing game as the user has decided to host
         const gameId = this.manager.host(this.socket.id);
         this.socket.join(gameId);
-        this.socket.emit(SocketConstants.HostGame, gameId, `http://${this.config.hostName}:${this.config.port}?g=${gameId}`);;
+        this.socket.emit(SocketConstants.HostGame, gameId, `http://${this.config.hostName}:${this.config.port}?g=${gameId}`);
     }
 };
