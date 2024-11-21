@@ -1,20 +1,20 @@
 import { SocketEvents } from "./socket-events.js";
 // Websocket event binding
 const socket = io();
-socket.on('cell-marked', (cellId, mark) => {
+socket.on(SocketEvents.ServerBroadcast.CellMarked, (cellId, mark) => {
     const cell = $cellDivElements.get(cellId);
     cell.innerHTML = mark;
 });
 socket.on(SocketEvents.Server.Error, (message) => showError(message));
-socket.on('host-game-accepted', (gameId, gameUrl) => {
+socket.on(SocketEvents.Server.HostGameAccepted, (gameId, gameUrl) => {
     hostGame(gameId, gameUrl);
 });
-socket.on('join-game-accepted', (gameId) => {
+socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
     currentGame = gameId;
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusElement.innerHTML = `Joined as guest of game ${gameId}`;
 });
-socket.on('guest-joined', () => {
+socket.on(SocketEvents.ServerBroadcast.GuestJoined, () => {
     console.log('Guest joined');
     guestJoined = true;
     $gameBoardWrapperElement.classList.remove('disabled');
@@ -33,7 +33,7 @@ for( const cell of window.document.querySelectorAll('.game-board-cell')) {
             showError('A game has been hosted but no guest has joined yet');
             return;
         }
-        socket.emit('cell-selected', currentGame, ev.target.id);
+        socket.emit(SocketEvents.Client.CellSelected, currentGame, ev.target.id);
     });
 }
 const $errorMessageElement = window.document.getElementById('error-message');
@@ -43,7 +43,7 @@ const $gameIdInputElement = window.document.getElementById('game-id-input');
 const $gameStatusElement = window.document.getElementById('game-control-panel__gameStatus');
 const $hostButtonElement = window.document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
-    socket.emit('request-host-game');
+    socket.emit(SocketEvents.Client.RequestHostGame);
 });
 const $joinButtonElement = window.document.getElementById('join-button');
 
@@ -68,7 +68,7 @@ const hostGame = async (gameId, gameUrl) => {
 };
 const joinGame = (gameId) => {
     console.log('Joining game', gameId);
-    socket.emit('request-join-game', gameId);
+    socket.emit(SocketEvents.Client.RequestJoinGame, gameId);
 };
 const showError = (message) => {
     console.error(message);
