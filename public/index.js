@@ -12,7 +12,7 @@ socket.on(SocketEvents.Server.HostGameAccepted, (gameId, gameUrl) => {
 socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
     currentGame = gameId;
     $gameBoardWrapperElement.classList.remove('disabled');
-    $gameStatusElement.innerHTML = `Joined as guest of game ${gameId}`;
+    $gameStatusMessageElement.innerHTML = `Joined as guest of game ${gameId}`;
 });
 socket.on(SocketEvents.ServerBroadcast.GuestJoined, () => {
     console.log('Guest joined');
@@ -41,7 +41,8 @@ const $errorMessageElement = window.document.getElementById('error-message');
 const $errorPopoverElement = window.document.getElementById('error-popover');
 const $gameBoardWrapperElement = window.document.getElementById('game-board__wrapper');
 const $gameIdInputElement = window.document.getElementById('game-id-input');
-const $gameStatusElement = window.document.getElementById('game-control-panel__gameStatus');
+const $gameStatusMessageElement = window.document.getElementById('game-control-panel__gameStatus-message');
+const $gameStatusGameIdElement = window.document.getElementById('game-control-panel__gameStatus-gameId');
 const $hostButtonElement = window.document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
     socket.emit(SocketEvents.Client.RequestHostGame);
@@ -52,7 +53,9 @@ const $joinButtonElement = window.document.getElementById('join-button');
 let currentGame;
 let guestJoined = false;
 const hostGame = async (gameId, gameUrl) => {
-    $gameStatusElement.innerHTML = `Hosting game ${gameId}`;
+    $gameStatusMessageElement.innerHTML = 'Hosting game';
+    $gameStatusGameIdElement.innerHTML = gameId;
+    $gameStatusGameIdElement.classList.remove('hidden');
     currentGame = gameId;
     guestJoined = false;
     $gameBoardWrapperElement.classList.add('disabled');

@@ -10,7 +10,10 @@
         <h3 class="unselectable">	
             &#65283; Deno-Tac-Toe
         </h3>
-        <pre id="game-control-panel__gameStatus">&#128308; No game. Host or join a game</pre>
+        <pre id="game-control-panel__gameStatus">
+            <span id="game-control-panel__gameStatus-message" class="unselectable">&#128308; No game. Host or join a game</span>
+            <span id="game-control-panel__gameStatus-gameId" class="hidden"></span>
+        </pre>
         <div id="game-control-panel">
             <div>
                 <button id="host-button" popovertarget="game-host-popover">Host</button>

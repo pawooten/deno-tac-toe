@@ -13,6 +13,9 @@ body {
 .disabled {
     opacity: 20%;
 }
+.hidden {
+    display: none;
+}
 .unselectable {
     user-select: none;
 }
@@ -34,6 +37,10 @@ body {
     display: flex;
     justify-content: center;
     margin: 1vw;
+}
+#game-control-panel__gameStatus-gameId {
+    margin-left: 1vw;
+    text-decoration: underline;
 }
 #game-control-panel {
     display: flex;
