@@ -25,6 +25,7 @@ body {
     cursor: pointer;
     border: 1px solid black;
     border-radius: 0.5vw;
+    user-select: none;
 }
 #game-control-panel__gameStatus {
     display: flex;
