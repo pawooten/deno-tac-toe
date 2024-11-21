@@ -6,7 +6,7 @@ export class GameJoinHandler extends BaseHandler {
         console.log(`Joining game with id: ${gameId}`);
         try {
             this.manager.join(gameId, this.socket.id);
-            this.socket.emit(SocketEvents.JoinGame, gameId);
+            this.socket.emit(SocketEvents.Server.JoinGameAccepted, gameId);
             this.socket.join(gameId);
             this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.GuestJoined);
         } catch (error) {

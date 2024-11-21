@@ -53,6 +53,6 @@ export class ServerInitializer {
     console.log(LoggedMessages.WebSocketConnection);
     socket.on(SocketEvents.Client.CellSelected, (gameId: string, selectedCell: string) => selectionHandler.handle(gameId, selectedCell));
     socket.on(SocketEvents.Client.RequestHostGame, () => gameHostHandler.handle());
-    socket.on(SocketEvents.JoinGame, (gameId: string) => gameJoinHandler.handle(gameId));
+    socket.on(SocketEvents.Client.RequestJoinGame, (gameId: string) => gameJoinHandler.handle(gameId));
   };
 }

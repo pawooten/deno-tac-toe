@@ -8,7 +8,7 @@ socket.on('error', (message) => showError(message));
 socket.on('host-game-accepted', (gameId, gameUrl) => {
     hostGame(gameId, gameUrl);
 });
-socket.on('join-game', (gameId) => {
+socket.on('join-game-accepted', (gameId) => {
     currentGame = gameId;
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusElement.innerHTML = `Joined as guest of game ${gameId}`;
@@ -18,7 +18,6 @@ socket.on('guest-joined', () => {
     guestJoined = true;
     $gameBoardWrapperElement.classList.remove('disabled');
     $errorPopoverElement.hidePopover();
-
 });
 // DOM Elements
 const $cellDivElements = new Map();
@@ -68,7 +67,7 @@ const hostGame = async (gameId, gameUrl) => {
 };
 const joinGame = (gameId) => {
     console.log('Joining game', gameId);
-    socket.emit('join-game', gameId);
+    socket.emit('request-join-game', gameId);
 };
 const showError = (message) => {
     console.error(message);
