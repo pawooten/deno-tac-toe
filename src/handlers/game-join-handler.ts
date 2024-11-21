@@ -1,4 +1,4 @@
-import { SocketConstants } from "../constants/socket-constants.ts";
+import { SocketEvents } from "../constants/socket-events.ts";
 import { BaseHandler } from "./base-handler.ts";
 
 export class GameJoinHandler extends BaseHandler {
@@ -6,12 +6,12 @@ export class GameJoinHandler extends BaseHandler {
         console.log(`Joining game with id: ${gameId}`);
         try {
             this.manager.join(gameId, this.socket.id);
-            this.socket.emit(SocketConstants.JoinGame, gameId);
+            this.socket.emit(SocketEvents.JoinGame, gameId);
             this.socket.join(gameId);
-            this.socketServer.to(gameId).emit(SocketConstants.GuestJoined);
+            this.socketServer.to(gameId).emit(SocketEvents.GuestJoined);
         } catch (error) {
             console.error(error);
-            this.socket.emit(SocketConstants.Error, error.message);
+            this.socket.emit(SocketEvents.Error, error.message);
         }
     }
 }

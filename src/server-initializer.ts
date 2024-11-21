@@ -4,7 +4,7 @@ import { Server as SocketServer, Socket } from "npm:socket.io";
 
 import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
 import { ServerConstants } from "./constants/server-constants.ts";
-import { SocketConstants } from "./constants/socket-constants.ts";
+import { SocketEvents } from "./constants/socket-events.ts";
 import { CellSelectionHandler } from "./handlers/cell-selection-handler.ts";
 import { GameHostHandler } from "./handlers/game-host-handler.ts";
 import { ServerConfig } from "../server-config.ts";
@@ -39,7 +39,7 @@ export class ServerInitializer {
     if (!this.socketServer) {
       throw new Error(ErrorMessages.NoSocketServerSpecified);
     }
-    this.socketServer.on(SocketConstants.Connection, this.socketConnectionHandler);
+    this.socketServer.on(SocketEvents.Connection, this.socketConnectionHandler);
     console.log(LoggedMessages.WebSocketServerInitialized);
   }
 
@@ -51,8 +51,8 @@ export class ServerInitializer {
     const gameJoinHandler = new GameJoinHandler(socket, this.socketServer, this.manager);
     const selectionHandler = new CellSelectionHandler(socket, this.socketServer, this.manager);
     console.log(LoggedMessages.WebSocketConnection);
-    socket.on(SocketConstants.CellSelected, (gameId: string, selectedCell: string) => selectionHandler.handle(gameId, selectedCell));
-    socket.on(SocketConstants.HostGame, () => gameHostHandler.handle());
-    socket.on(SocketConstants.JoinGame, (gameId: string) => gameJoinHandler.handle(gameId));
+    socket.on(SocketEvents.CellSelected, (gameId: string, selectedCell: string) => selectionHandler.handle(gameId, selectedCell));
+    socket.on(SocketEvents.HostGame, () => gameHostHandler.handle());
+    socket.on(SocketEvents.JoinGame, (gameId: string) => gameJoinHandler.handle(gameId));
   };
 }
