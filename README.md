@@ -10,4 +10,5 @@ TODO:
 - random theme
 
 Done:
+
 - display current theme in subtitle
