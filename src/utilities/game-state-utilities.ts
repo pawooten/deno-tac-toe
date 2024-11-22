@@ -54,10 +54,11 @@ export const isWinningMove = (game: GameState, [row, column]: number[], ): boole
     // TODO diagonal wins
     return false;
 };
-export const getGameResult = (game: GameState, [row, column]: number[]): string => {
+export const getGameResult = (game: GameState, userId: string, [row, column]: number[]): string => {
     const mark = game.cells[row][column];
     if (isWinningMove(game, [row, column])) {
-        return `${mark} wins!`;
+        const user = game.host === userId ? 'Host' : 'Guest';
+        return `${user} ${mark} wins!`;
     }
     if (isStalemate(game)) {
         return 'Stalemate!';
