@@ -21,13 +21,15 @@ export class CellSelectionHandler extends BaseHandler {
                 return;
             }
             game.cells[cellRow][cellColumn] = mark;
+            game.isHostTurn = !game.isHostTurn;
+
             const result = getGameResult(game, this.socket.id, [cellRow, cellColumn]);
             if (result) {
                 this.manager.end(gameId);
             }
             console.log(`User selected cell: ${selectedCell} game ${gameId}`);
 
-            this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.CellMarked, { selectedCell, mark, result });
+            this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.CellMarked, { selectedCell, mark, isHostTurn: game.isHostTurn, result });
         } catch (error) {
             this.socket.emit(SocketEvents.Server.Error, error.message);
         }

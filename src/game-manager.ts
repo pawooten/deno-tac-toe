@@ -34,6 +34,7 @@ export class GameManager {
             host, 
             guest: '',
             id: newGameId,
+            isHostTurn: true,
             theme: GameThemes.dinosaurVsSquid,
             cells: [
                 ['', '', ''],

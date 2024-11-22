@@ -49,6 +49,10 @@ body {
     margin-left: 1vw;
     text-decoration: underline;
 }
+#game-control-panel__turnHostLabel {
+    display: flex;
+    justify-content: center;
+}
 #game-control-panel {
     display: flex;
     flex-direction: column;

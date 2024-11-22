@@ -1,7 +1,12 @@
 import { SocketEvents } from "./constants.js";
 // Websocket event binding
 const socket = io();
-socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, result }) => {
+socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostTurn, result }) => {
+    if (isHostTurn) {
+        $gameTurnLabelElement.innerHTML = 'It is the Host turn' + mark;
+    } else {
+        $gameTurnLabelElement.innerHTML = 'It is the Guest turn' + mark;
+    }
     const cell = $cellDivElements.get(selectedCell);
     cell.innerHTML = mark;
     if (result) {
@@ -60,6 +65,7 @@ const $gameHostPopoverElement = document.getElementById('game-host-popover');
 const $gameIdInputElement = document.getElementById('game-id-input');
 const $gameStatusMessageElement = document.getElementById('game-control-panel__gameStatus-message');
 const $gameStatusGameIdElement = document.getElementById('game-control-panel__gameStatus-gameId');
+const $gameTurnLabelElement = document.getElementById('game-control-panel__turnHostLabel');
 const $hostButtonElement = document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
     socket.emit(SocketEvents.Client.RequestHostGame);
