@@ -38,28 +38,28 @@ const onCellClick = (ev) => {
     socket.emit(SocketEvents.Client.CellSelected, currentGame, ev.target.id);
 };
 const $cellDivElements = new Map();
-for( const cell of window.document.querySelectorAll('.game-board-cell')) {
+for( const cell of document.querySelectorAll('.game-board-cell')) {
     $cellDivElements.set(cell.id, cell);
     cell.addEventListener('click', onCellClick);
 }
-const $errorMessageElement = window.document.getElementById('error-message');
-const $errorPopoverElement = window.document.getElementById('error-popover');
-const $gameOverPopoverElement = window.document.getElementById('game-over-popover');
-const $gameOverMessageElement = window.document.getElementById('game-over-message');
-const $gameBoardWrapperElement = window.document.getElementById('game-board__wrapper');
-const $gameHostPopoverElement = window.document.getElementById('game-host-popover');
-const $gameIdInputElement = window.document.getElementById('game-id-input');
-const $gameStatusMessageElement = window.document.getElementById('game-control-panel__gameStatus-message');
-const $gameStatusGameIdElement = window.document.getElementById('game-control-panel__gameStatus-gameId');
-const $hostButtonElement = window.document.getElementById('host-button');
+const $errorMessageElement = document.getElementById('error-message');
+const $errorPopoverElement = document.getElementById('error-popover');
+const $gameOverPopoverElement = document.getElementById('game-over-popover');
+const $gameOverMessageElement = document.getElementById('game-over-message');
+const $gameBoardWrapperElement = document.getElementById('game-board__wrapper');
+const $gameHostPopoverElement = document.getElementById('game-host-popover');
+const $gameIdInputElement = document.getElementById('game-id-input');
+const $gameStatusMessageElement = document.getElementById('game-control-panel__gameStatus-message');
+const $gameStatusGameIdElement = document.getElementById('game-control-panel__gameStatus-gameId');
+const $hostButtonElement = document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
     socket.emit(SocketEvents.Client.RequestHostGame);
 });
-const $joinButtonElement = window.document.getElementById('join-button');
+const $joinButtonElement = document.getElementById('join-button');
 $joinButtonElement.addEventListener('click', () => {
     joinGame($gameIdInputElement.value);
 });
-const $gameControlPanelSubtitleMessageElement = window.document.getElementById('game-control-panel__subtitle-message');
+const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
 // Game logic
 let currentGame;
 let guestJoined = false;
