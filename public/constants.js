@@ -32,9 +32,11 @@ export const GameThemes = {
     classic: 'classic',
     clownVsVomit: 'clown-vs-vomit',
     devilVsAngel: 'devil-vs-angel',
+    dinosaurVsSquid: 'dinosaur-vs-squid',
     dizzyVsMindBlown: 'dizzy-vs-mind-blown',
     dogVsCat: 'dog-vs-cat',
     guitarVsMic: 'guitar-vs-mic',
     meatVsSalad: 'meat-vs-salad',
     tacoVsRamen: 'taco-vs-ramen',
+    vampireVsZombie: 'vampire-vs-zombie',
 };

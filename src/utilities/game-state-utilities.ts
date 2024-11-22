@@ -8,11 +8,13 @@ const themeMarks = new Map([
     [GameThemes.classic, defaultMarks],
     [GameThemes.clownVsVomit, ['&#129313;', '&#129326;']],
     [GameThemes.devilVsAngel, ['&#128520;', '&#128519;']],
+    [GameThemes.dinosaurVsSquid, ['&#129430', '&#129425;']],
     [GameThemes.dizzyVsMindBlown, ['&#128565;', '&#129327;']],
     [GameThemes.dogVsCat, ['&#128021;', '&#128008;']],
     [GameThemes.guitarVsMic, ['&#127928;', '&#127908;']],
     [GameThemes.meatVsSalad, ['&#129385;', '&#129367;']],
     [GameThemes.tacoVsRamen, ['&#127790;', '&#127836;']],
+    [GameThemes.vampireVsZombie, ['&#129499;', '&#129503;']],
 ]);
 export const getSubtitleMessage = (theme: string): string => {
     const marks = themeMarks.get(theme) || defaultMarks;
