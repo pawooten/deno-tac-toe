@@ -6,6 +6,8 @@ TODO:
 - play again (with same host and guest)
 - dropdown to select theme
 - random theme
+- env variables
+- hosting
 
 Done:
 
