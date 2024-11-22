@@ -36,4 +36,5 @@ export const GameThemes = {
     dogVsCat: 'dog-vs-cat',
     guitarVsMic: 'guitar-vs-mic',
     meatVsSalad: 'meat-vs-salad',
+    tacoVsRamen: 'taco-vs-ramen',
 };

@@ -12,6 +12,7 @@ const themeMarks = new Map([
     [GameThemes.dogVsCat, ['&#128021;', '&#128008;']],
     [GameThemes.guitarVsMic, ['&#127928;', '&#127908;']],
     [GameThemes.meatVsSalad, ['&#129385;', '&#129367;']],
+    [GameThemes.tacoVsRamen, ['&#127790;', '&#127836;']],
 ]);
 export const getSubtitleMessage = (theme: string): string => {
     const marks = themeMarks.get(theme) || defaultMarks;

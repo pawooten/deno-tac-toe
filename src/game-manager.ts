@@ -20,7 +20,7 @@ export class GameManager {
             host, 
             guest: '',
             id,
-            theme: GameThemes.meatVsSalad,
+            theme: GameThemes.tacoVsRamen,
             cells: [
                 ['', '', ''],
                 ['', '', ''],
