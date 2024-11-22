@@ -21,6 +21,7 @@ socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle) => {
     console.log('Guest joined');
     guestJoined = true;
     $gameControlPanelSubtitleMessageElement.innerHTML = subtitle;
+    $gameHostPopoverElement.hidePopover();
     $gameBoardWrapperElement.classList.remove('disabled');
     $errorPopoverElement.hidePopover();
 });
@@ -46,6 +47,7 @@ const $errorPopoverElement = window.document.getElementById('error-popover');
 const $gameOverPopoverElement = window.document.getElementById('game-over-popover');
 const $gameOverMessageElement = window.document.getElementById('game-over-message');
 const $gameBoardWrapperElement = window.document.getElementById('game-board__wrapper');
+const $gameHostPopoverElement = window.document.getElementById('game-host-popover');
 const $gameIdInputElement = window.document.getElementById('game-id-input');
 const $gameStatusMessageElement = window.document.getElementById('game-control-panel__gameStatus-message');
 const $gameStatusGameIdElement = window.document.getElementById('game-control-panel__gameStatus-gameId');
