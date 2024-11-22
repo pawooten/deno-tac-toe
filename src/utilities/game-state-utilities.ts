@@ -49,9 +49,13 @@ export const isWinningMove = (game: GameState, [row, column]: number[], ): boole
     if (game.cells.every(row => row[column] === mark)) {
         return true;
     }
-    // const diagonalWin = (row === column && game.cells.every((row, index) => row[index] === mark)) ||
-    //     (row + column === 2 && game.cells.every((row, index) => row[2 - index] === mark));
-    // TODO diagonal wins
+
+    if (game.cells[0][0] === mark && game.cells[1][1] === mark && game.cells[2][2] === mark) {
+        return true;
+    }
+    if (game.cells[0][2] === mark && game.cells[1][1] === mark && game.cells[2][0] === mark) {
+        return true;
+    }
     return false;
 };
 export const getGameResult = (game: GameState, userId: string, [row, column]: number[]): string => {
