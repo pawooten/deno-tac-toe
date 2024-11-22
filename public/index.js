@@ -1,9 +1,12 @@
 import { SocketEvents } from "./constants.js";
 // Websocket event binding
 const socket = io();
-socket.on(SocketEvents.ServerBroadcast.CellMarked, (cellId, mark) => {
-    const cell = $cellDivElements.get(cellId);
+socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, result }) => {
+    const cell = $cellDivElements.get(selectedCell);
     cell.innerHTML = mark;
+    if (result) {
+        showGameOver(result);
+    }
 });
 socket.on(SocketEvents.Server.Error, (message) => showError(message));
 socket.on(SocketEvents.Server.HostGameAccepted, (gameId, gameUrl) => {
@@ -40,6 +43,8 @@ for( const cell of window.document.querySelectorAll('.game-board-cell')) {
 }
 const $errorMessageElement = window.document.getElementById('error-message');
 const $errorPopoverElement = window.document.getElementById('error-popover');
+const $gameOverPopoverElement = window.document.getElementById('game-over-popover');
+const $gameOverMessageElement = window.document.getElementById('game-over-message');
 const $gameBoardWrapperElement = window.document.getElementById('game-board__wrapper');
 const $gameIdInputElement = window.document.getElementById('game-id-input');
 const $gameStatusMessageElement = window.document.getElementById('game-control-panel__gameStatus-message');
@@ -83,6 +88,10 @@ const showError = (message) => {
     $errorMessageElement.innerHTML = message;
     $errorPopoverElement.showPopover();
 };
+const showGameOver = (message) => {
+    $gameOverMessageElement.innerHTML = message;
+    $gameOverPopoverElement.showPopover();
+}
 const parseGameId = () => {
     for (const keyValuePair of location.search.slice(1).split('&')) {
         const [key, value] = keyValuePair.split('=');

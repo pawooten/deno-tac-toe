@@ -1,5 +1,5 @@
 import { SocketEvents } from "../../public/constants.js";
-import { getCellIndices, getUserMark } from "../utilities/game-state-utilities.ts";
+import { getCellIndices, getGameResult, getUserMark } from "../utilities/game-state-utilities.ts";
 import { BaseHandler } from "./base-handler.ts";
 import { ErrorMessages } from "../constants/messages.ts";
 
@@ -21,9 +21,10 @@ export class CellSelectionHandler extends BaseHandler {
                 return;
             }
             game.cells[cellRow][cellColumn] = mark;
+            const result = getGameResult(game, [cellRow, cellColumn]);
             console.log(`User selected cell: ${selectedCell} game ${gameId}`);
 
-            this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.CellMarked, selectedCell, mark);
+            this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.CellMarked, { selectedCell, mark, result });
         } catch (error) {
             this.socket.emit(SocketEvents.Server.Error, error.message);
         }

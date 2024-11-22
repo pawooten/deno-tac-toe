@@ -37,3 +37,29 @@ export const getCellIndices = (cell: string): [number, number] => {
         default: throw new Error(`${ErrorMessages.InvalidCellSpecified} : ${cell}`);
     }
 }
+export const isStalemate = (game: GameState): boolean => {
+    return game.cells.flat().every(cell => cell !== '');
+}
+export const isWinningMove = (game: GameState, [row, column]: number[], ): boolean => {
+    const mark = game.cells[row][column];
+    if (game.cells[row].every(cell => cell === mark)) {
+        return true;
+    }
+    if (game.cells.every(row => row[column] === mark)) {
+        return true;
+    }
+    // const diagonalWin = (row === column && game.cells.every((row, index) => row[index] === mark)) ||
+    //     (row + column === 2 && game.cells.every((row, index) => row[2 - index] === mark));
+    // TODO diagonal wins
+    return false;
+};
+export const getGameResult = (game: GameState, [row, column]: number[]): string => {
+    const mark = game.cells[row][column];
+    if (isWinningMove(game, [row, column])) {
+        return `${mark} wins!`;
+    }
+    if (isStalemate(game)) {
+        return 'Stalemate!';
+    }
+    return '';
+}
