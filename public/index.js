@@ -94,6 +94,7 @@ const hostGame = async (gameId, gameUrl) => {
 const clearCells = () => {
     for (const cell of $cellDivElements.values()) {
         cell.innerHTML = '';
+        cell.classList.remove('winning-game-board-cell');
     }
 }
 const disableJoinGame = () => {
@@ -111,8 +112,12 @@ const showError = (message) => {
     $errorMessageElement.innerHTML = message;
     $errorPopoverElement.showPopover();
 };
-const showGameOver = (message) => {
-    $gameOverMessageElement.innerHTML = message;
+const showGameOver = (result) => {
+    
+    for (const cell of result.cellIds) {
+        $cellDivElements.get(cell).classList.add('winning-game-board-cell');
+    }
+    $gameOverMessageElement.innerHTML = result.message;
     $gameOverPopoverElement.showPopover();
 }
 const parseGameId = () => {

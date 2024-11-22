@@ -24,6 +24,7 @@ body {
     height: 10vw;
     font-size: 10vw;
     margin: 1vw;
+    padding: 0.2em;
     background-color: lightgray;
     display: flex;
     align-items: center;
@@ -32,6 +33,10 @@ body {
     border: 1px solid black;
     border-radius: 0.5vw;
     user-select: none;
+}
+.winning-game-board-cell {
+    background-color:lightgreen;
+    transition: background-color 1000ms linear;
 }
 #game-control-panel__gameStatus {
     display: flex;

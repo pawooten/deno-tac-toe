@@ -6,8 +6,10 @@ TODO:
 - play again (with same host and guest)
 - dropdown to select theme
 - random theme
+- game timeout
 - env variables
 - hosting
+- tests
 
 Done:
 
