@@ -5,6 +5,8 @@ socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, result 
     const cell = $cellDivElements.get(selectedCell);
     cell.innerHTML = mark;
     if (result) {
+        currentGame = null;
+        guestJoined = false;
         showGameOver(result);
     }
 });
@@ -14,6 +16,7 @@ socket.on(SocketEvents.Server.HostGameAccepted, (gameId, gameUrl) => {
 });
 socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
     currentGame = gameId;
+    disableJoinGame();
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusMessageElement.innerHTML = `Joined as guest of game ${gameId}`;
     clearCells();
@@ -75,10 +78,8 @@ const hostGame = async (gameId, gameUrl) => {
     $gameStatusGameIdElement.classList.remove('hidden');
     currentGame = gameId;
     guestJoined = false;
-    $gameBoardWrapperElement.classList.add('disabled');
-    $gameIdInputElement.disabled = true;
-    $joinButtonElement.disabled = true;
     clearCells();
+    disableJoinGame();
     try {
         await navigator.clipboard.writeText(gameUrl);
       } catch (error) {
@@ -90,6 +91,12 @@ const clearCells = () => {
         cell.innerHTML = '';
     }
 }
+const disableJoinGame = () => {
+    $gameBoardWrapperElement.classList.add('disabled');
+    $gameIdInputElement.value = '';
+    $gameIdInputElement.disabled = true;
+    $joinButtonElement.disabled = true;
+};
 const joinGame = (gameId) => {
     console.log('Joining game', gameId);
     socket.emit(SocketEvents.Client.RequestJoinGame, gameId);
