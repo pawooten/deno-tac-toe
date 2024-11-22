@@ -36,7 +36,7 @@ export class GameManager {
     public join(gameId: string, guest: string): string {
         const game = this.games.get(gameId);
         if (!game) {
-            throw new Error(`${ErrorMessages.GameNotFound} ${gameId}`);
+            throw new Error(`'${gameId}' ${ErrorMessages.GameNotFound}`);
         }
         if (game.guest) {
             // Another user has already joined the specified game
