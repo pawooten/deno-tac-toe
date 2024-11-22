@@ -3,8 +3,6 @@
 TODO:
 
 - turn system
-- detect win
-- detect stalemate
 - play again (with same host and guest)
 - dropdown to select theme
 - random theme
@@ -12,3 +10,5 @@ TODO:
 Done:
 
 - display current theme in subtitle
+- detect win
+- detect stalemate

@@ -58,6 +58,11 @@ $hostButtonElement.addEventListener('click', () => {
 });
 const $joinButtonElement = document.getElementById('join-button');
 $joinButtonElement.addEventListener('click', () => {
+    const gameId = $gameIdInputElement.value;
+    if (!gameId) {
+        showError('Please enter a game ID');
+        return;
+    }
     joinGame($gameIdInputElement.value);
 });
 const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
