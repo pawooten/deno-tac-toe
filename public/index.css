@@ -37,6 +37,8 @@ body {
 .winning-game-board-cell {
     background-color:lightgreen;
     transition: background-color 1000ms linear;
+    border-radius: 100px;
+    transition: border-radius 500ms linear;
 }
 #game-control-panel__gameStatus {
     display: flex;
