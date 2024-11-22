@@ -16,6 +16,7 @@ socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
     currentGame = gameId;
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusMessageElement.innerHTML = `Joined as guest of game ${gameId}`;
+    clearCells();
 });
 socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle) => {
     console.log('Guest joined');
@@ -72,15 +73,18 @@ const hostGame = async (gameId, gameUrl) => {
     $gameBoardWrapperElement.classList.add('disabled');
     $gameIdInputElement.disabled = true;
     $joinButtonElement.disabled = true;
-    for (const cell of $cellDivElements.values()) {
-        cell.innerHTML = '';
-    }
+    clearCells();
     try {
         await navigator.clipboard.writeText(gameUrl);
       } catch (error) {
         console.error(error.message);
       }
 };
+const clearCells = () => {
+    for (const cell of $cellDivElements.values()) {
+        cell.innerHTML = '';
+    }
+}
 const joinGame = (gameId) => {
     console.log('Joining game', gameId);
     socket.emit(SocketEvents.Client.RequestJoinGame, gameId);
