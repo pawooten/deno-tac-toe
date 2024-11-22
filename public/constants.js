@@ -14,6 +14,8 @@ export const SocketEvents = {
     Server: {
         // An error has occurred
         Error: 'error',
+        // The host has abandoned an existing game by hosting a new game
+        GameAbandoned: 'game-abandoned',
         // The request to host a new game has been accepted
         HostGameAccepted: 'host-game-accepted',
         // The request to join an existing game as guest has been accepted

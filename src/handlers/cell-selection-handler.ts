@@ -22,6 +22,9 @@ export class CellSelectionHandler extends BaseHandler {
             }
             game.cells[cellRow][cellColumn] = mark;
             const result = getGameResult(game, this.socket.id, [cellRow, cellColumn]);
+            if (result !== '') {
+                this.manager.end(gameId);
+            }
             console.log(`User selected cell: ${selectedCell} game ${gameId}`);
 
             this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.CellMarked, { selectedCell, mark, result });

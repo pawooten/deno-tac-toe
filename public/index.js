@@ -11,6 +11,11 @@ socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, result 
     }
 });
 socket.on(SocketEvents.Server.Error, (message) => showError(message));
+socket.on(SocketEvents.Server.GameAbandoned, () => {
+    currentGame = null;
+    guestJoined = false;
+    showError('The host has abandoned the game');
+});
 socket.on(SocketEvents.Server.HostGameAccepted, (gameId, gameUrl) => {
     hostGame(gameId, gameUrl);
 });

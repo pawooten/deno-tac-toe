@@ -6,6 +6,16 @@ export class GameManager {
     private games: Map<string, GameState> = new Map<string, GameState>();
     private gameIDsByPlayer: Map<string, string> = new Map<string, string>();
 
+    public end(gameId: string): void {
+        const game = this.games.get(gameId);
+        if (!game) {
+            throw new Error(`'${gameId}' ${ErrorMessages.GameNotFound}`);
+        }
+        this.games.delete(gameId);
+        this.gameIDsByPlayer.delete(game.host);
+        console.log(`Game ended with id: ${gameId}. Game count: ${this.games.size}, ${this.gameIDsByPlayer.size}`);
+    }
+
     public get(id: string): GameState {
         const game = this.games.get(id);
         if (!game) {
@@ -14,12 +24,16 @@ export class GameManager {
         return game;
     }
 
-    public host(host: string): string {
-        const id =  crypto.randomUUID();
+    public host(host: string): HostResult {
+        const abandonedGameId = this.gameIDsByPlayer.get(host);
+        if (abandonedGameId) {
+            this.end(abandonedGameId);
+        }
+        const newGameId =  crypto.randomUUID();
         const game: GameState = {
             host, 
             guest: '',
-            id,
+            id: newGameId,
             theme: GameThemes.dinosaurVsSquid,
             cells: [
                 ['', '', ''],
@@ -27,10 +41,10 @@ export class GameManager {
                 ['', '', '']
             ]
         };
-        this.games.set(id, game);
-        this.gameIDsByPlayer.set(host, id);
-        console.log(`Game hosted with id: ${id}. Game count: ${this.games.size}`);
-        return id;
+        this.games.set(newGameId, game);
+        this.gameIDsByPlayer.set(host, newGameId);
+        console.log(`Game hosted with id: ${newGameId}. Game count: ${this.games.size}, ${this.gameIDsByPlayer.size}`);
+        return {newGameId, abandonedGameId};
     }
 
     public join(gameId: string, guest: string): string {
@@ -45,4 +59,9 @@ export class GameManager {
         game.guest = guest;
         return gameId;
     }
+}
+
+export interface HostResult {
+    newGameId: string;
+    abandonedGameId: string | undefined;
 }
