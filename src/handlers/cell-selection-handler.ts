@@ -20,6 +20,13 @@ export class CellSelectionHandler extends BaseHandler {
                 this.socket.emit(SocketEvents.Server.Error, ErrorMessages.CellAlreadySelected);
                 return;
             }
+            const isHost = this.socket.id === game.host;
+            const isGuest = this.socket.id === game.guest;
+
+            if ((game.isHostTurn && !isHost) || (!game.isHostTurn && !isGuest)) {
+                this.socket.emit(SocketEvents.Server.Error, ErrorMessages.NotYourTurn);
+                return;
+            }
             game.cells[cellRow][cellColumn] = mark;
             game.isHostTurn = !game.isHostTurn;
 
