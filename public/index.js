@@ -14,9 +14,10 @@ socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusMessageElement.innerHTML = `Joined as guest of game ${gameId}`;
 });
-socket.on(SocketEvents.ServerBroadcast.GuestJoined, () => {
+socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle) => {
     console.log('Guest joined');
     guestJoined = true;
+    $gameControlPanelSubtitleMessageElement.innerHTML = subtitle;
     $gameBoardWrapperElement.classList.remove('disabled');
     $errorPopoverElement.hidePopover();
 });
@@ -51,6 +52,7 @@ const $joinButtonElement = window.document.getElementById('join-button');
 $joinButtonElement.addEventListener('click', () => {
     joinGame($gameIdInputElement.value);
 });
+const $gameControlPanelSubtitleMessageElement = window.document.getElementById('game-control-panel__subtitle-message');
 // Game logic
 let currentGame;
 let guestJoined = false;

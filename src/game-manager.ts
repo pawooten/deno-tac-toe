@@ -1,5 +1,6 @@
 import { GameState } from "./game-state.ts";
 import { ErrorMessages } from "./constants/messages.ts";
+import { GameThemes } from "../public/constants.js";
 
 export class GameManager {
     private games: Map<string, GameState> = new Map<string, GameState>();
@@ -19,6 +20,7 @@ export class GameManager {
             host, 
             guest: '',
             id,
+            theme: GameThemes.meatVsSalad,
             cells: [
                 ['', '', ''],
                 ['', '', ''],

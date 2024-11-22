@@ -1,4 +1,5 @@
 import { SocketEvents } from "../../public/constants.js";
+import { getSubtitleMessage } from "../utilities/game-state-utilities.ts";
 import { BaseHandler } from "./base-handler.ts";
 
 export class GameJoinHandler extends BaseHandler {
@@ -8,7 +9,7 @@ export class GameJoinHandler extends BaseHandler {
             this.manager.join(gameId, this.socket.id);
             this.socket.emit(SocketEvents.Server.JoinGameAccepted, gameId);
             this.socket.join(gameId);
-            this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.GuestJoined);
+            this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.GuestJoined, getSubtitleMessage(this.manager.get(gameId).theme));
         } catch (error) {
             console.error(error);
             this.socket.emit(SocketEvents.Server.Error, error.message);
