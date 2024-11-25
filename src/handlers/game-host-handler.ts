@@ -17,6 +17,12 @@ export class GameHostHandler extends BaseHandler {
             this.socketServer.to(abandonedGameId).emit(SocketEvents.Server.GameAbandoned);
         }
         this.socket.join(newGameId);
-        this.socket.emit(SocketEvents.Server.HostGameAccepted, newGameId, `http://${this.config.hostName}:${this.config.port}?g=${newGameId}`);
+    
+        const scheme = Deno.env.get("USE_HTTP") ? 'http' : 'https';
+        let url =  `${scheme}://${this.config.hostName}?g=${newGameId}`;
+        if (this.config.port) {
+            url = `${scheme}://${this.config.hostName}:${this.config.port}?g=${newGameId}`;
+        }
+        this.socket.emit(SocketEvents.Server.HostGameAccepted, newGameId, url);
     }
 };

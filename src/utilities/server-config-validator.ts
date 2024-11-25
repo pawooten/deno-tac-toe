@@ -6,7 +6,7 @@ export const validateServerConfig = (config: ServerConfig): void => {
     if (!config) {
         throw new Error(ErrorMessages.NoServerConfigSpecified);
       }
-      if (config.port < ServerConstants.minPort || config.port > ServerConstants.maxPort) {
+      if (config.port && (config.port < ServerConstants.minPort || config.port > ServerConstants.maxPort)) {
           throw new Error(ErrorMessages.InvalidPortSpecified);
       }
       if (config.hostName === '') {
@@ -15,6 +15,10 @@ export const validateServerConfig = (config: ServerConfig): void => {
 }
 export const getServerConfig = (): ServerConfig => {
     const hostName = Deno.env.get("HOSTNAME") || "localhost";
-    const port = +(Deno.env.get("PORT") || "443");
+    let port = undefined;
+    const envPort = Deno.env.get("PORT");
+    if (envPort) {
+      port = +envPort;
+    }
     return { hostName, port };
 }
