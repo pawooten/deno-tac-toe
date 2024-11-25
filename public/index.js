@@ -67,6 +67,7 @@ const $gameTurnIndicatorWrapperElement = document.getElementById('game-control-p
 const $gameTurnIndicatorMarkElement = document.getElementById('game-control-panel__turnIndicator-mark');
 const $hostButtonElement = document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
+    $gameTurnIndicatorWrapperElement.classList.add('hidden')
     socket.emit(SocketEvents.Client.RequestHostGame);
 });
 const $joinButtonElement = document.getElementById('join-button');
