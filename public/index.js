@@ -2,6 +2,7 @@ import { SocketEvents } from "./constants.js";
 // Websocket event binding
 const socket = io();
 socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostTurn, result }) => {
+    $errorPopoverElement.hidePopover();
     showTurnMessage(isHostTurn);
     const cell = $cellDivElements.get(selectedCell);
     cell.innerHTML = mark;
