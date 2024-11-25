@@ -2,11 +2,7 @@ import { SocketEvents } from "./constants.js";
 // Websocket event binding
 const socket = io();
 socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostTurn, result }) => {
-    if (isHostTurn) {
-        $gameTurnLabelElement.innerHTML = 'It is the Host turn' + mark;
-    } else {
-        $gameTurnLabelElement.innerHTML = 'It is the Guest turn' + mark;
-    }
+    showTurnMessage(isHostTurn);
     const cell = $cellDivElements.get(selectedCell);
     cell.innerHTML = mark;
     if (result) {
@@ -14,6 +10,16 @@ socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostT
         guestJoined = false;
         showGameOver(result);
     }
+});
+socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
+    hostMark = host;
+    guestMark = guest;
+    showTurnMessage(true);
+    guestJoined = true;
+    $gameControlPanelSubtitleMessageElement.innerHTML = subtitle;
+    $gameHostPopoverElement.hidePopover();
+    $gameBoardWrapperElement.classList.remove('disabled');
+    $errorPopoverElement.hidePopover();
 });
 socket.on(SocketEvents.Server.Error, (message) => showError(message));
 socket.on(SocketEvents.Server.GameAbandoned, () => {
@@ -30,14 +36,6 @@ socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusMessageElement.innerHTML = `Joined as guest of game ${gameId}`;
     clearCells();
-});
-socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle) => {
-    console.log('Guest joined');
-    guestJoined = true;
-    $gameControlPanelSubtitleMessageElement.innerHTML = subtitle;
-    $gameHostPopoverElement.hidePopover();
-    $gameBoardWrapperElement.classList.remove('disabled');
-    $errorPopoverElement.hidePopover();
 });
 // DOM Elements
 const onCellClick = (ev) => {
@@ -81,9 +79,11 @@ $joinButtonElement.addEventListener('click', () => {
 });
 const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
 // Game logic
-let currentGame;
+let currentGame, hostMark, guestMark;
 let guestJoined = false;
-const hostGame = async (gameId, gameUrl) => {
+const hostGame = async (gameId, gameUrl, host, guest) => {
+    hostMark = host;
+    guestMark = guest;
     $gameStatusMessageElement.innerHTML = 'Hosting game';
     $gameStatusGameIdElement.innerHTML = gameId;
     $gameStatusGameIdElement.classList.remove('hidden');
@@ -112,6 +112,13 @@ const disableJoinGame = () => {
 const joinGame = (gameId) => {
     console.log('Joining game', gameId);
     socket.emit(SocketEvents.Client.RequestJoinGame, gameId);
+};
+const showTurnMessage = (isHostTurn) => {
+    if (isHostTurn) {
+        $gameTurnLabelElement.innerHTML = 'It is the Host turn' + hostMark;
+    } else {
+        $gameTurnLabelElement.innerHTML = 'It is the Guest turn' + guestMark;
+    }
 };
 const showError = (message) => {
     console.error(message);
