@@ -1,4 +1,4 @@
-import { ServerConfig } from "../../server-config.ts";
+import { ServerConfig } from "../server-config.ts";
 import { ErrorMessages } from "../constants/messages.ts";
 import { ServerConstants } from "../constants/server-constants.ts";
 

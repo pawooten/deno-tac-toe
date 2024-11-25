@@ -1,6 +1,6 @@
 import { assertEquals } from "@std/assert";
 import { ErrorMessages } from "../constants/messages.ts";
-import { ServerConfig } from "../../server-config.ts";
+import { ServerConfig } from "../server-config.ts";
 import { validateServerConfig } from "./server-config-validator.ts";
 
 //#region Port Tests

@@ -7,7 +7,7 @@ import { ServerConstants } from "./constants/server-constants.ts";
 import { SocketEvents } from "../public/constants.js";
 import { CellSelectionHandler } from "./handlers/cell-selection-handler.ts";
 import { GameHostHandler } from "./handlers/game-host-handler.ts";
-import { ServerConfig } from "../server-config.ts";
+import { ServerConfig } from "./server-config.ts";
 import { validateServerConfig } from "./utilities/server-config-validator.ts";
 import { GameJoinHandler } from "./handlers/game-join-handler.ts";
 import { GameManager } from "./game-manager.ts";
