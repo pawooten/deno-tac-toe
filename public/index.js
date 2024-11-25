@@ -50,7 +50,7 @@ const onCellClick = (ev) => {
     socket.emit(SocketEvents.Client.CellSelected, currentGame, ev.target.id);
 };
 const $cellDivElements = new Map();
-for( const cell of document.querySelectorAll('.game-board-cell')) {
+for( const cell of document.querySelectorAll('#game-board .game-board-cell')) {
     $cellDivElements.set(cell.id, cell);
     cell.addEventListener('click', onCellClick);
 }
@@ -63,7 +63,8 @@ const $gameHostPopoverElement = document.getElementById('game-host-popover');
 const $gameIdInputElement = document.getElementById('game-id-input');
 const $gameStatusMessageElement = document.getElementById('game-control-panel__gameStatus-message');
 const $gameStatusGameIdElement = document.getElementById('game-control-panel__gameStatus-gameId');
-const $gameTurnLabelElement = document.getElementById('game-control-panel__turnHostLabel');
+const $gameTurnIndicatorWrapperElement = document.getElementById('game-control-panel__turnIndicator-wrapper');
+const $gameTurnIndicatorMarkElement = document.getElementById('game-control-panel__turnIndicator-mark');
 const $hostButtonElement = document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
     socket.emit(SocketEvents.Client.RequestHostGame);
@@ -114,10 +115,11 @@ const joinGame = (gameId) => {
     socket.emit(SocketEvents.Client.RequestJoinGame, gameId);
 };
 const showTurnMessage = (isHostTurn) => {
+    $gameTurnIndicatorWrapperElement.classList.remove('hidden');
     if (isHostTurn) {
-        $gameTurnLabelElement.innerHTML = 'It is the Host turn' + hostMark;
+        $gameTurnIndicatorMarkElement.innerHTML = hostMark;
     } else {
-        $gameTurnLabelElement.innerHTML = 'It is the Guest turn' + guestMark;
+        $gameTurnIndicatorMarkElement.innerHTML = guestMark;
     }
 };
 const showError = (message) => {
