@@ -14,7 +14,6 @@
             <span id="game-control-panel__gameStatus-message" class="unselectable">&#128308; No game. Host or join a game</span>
             <span id="game-control-panel__gameStatus-gameId" class="hidden"></span>
         </pre>
-        <pre id="game-control-panel__turnHostLabel"></pre>
         <div id="game-control-panel">
             <div>
                 <button id="host-button" popovertarget="game-host-popover">Host</button>
@@ -23,8 +22,14 @@
                     <input type="text" id="game-id-input" placeholder="Join Code" autocomplete="off">        
                 </span>
             </div>
-            <div id="game-control-panel__subtitle" class="unselectable">
-                <pre id="game-control-panel__subtitle-message">&#128712; The host is always X, the guest is always O.</pre>
+            <div id="game-control-panel__turnIndicator-wrapper" class="hidden">
+                <div id="game-control-panel__turnIndicator">
+                    <h4 class="unselectable">Current Turn:</h4>
+                    <div id="game-control-panel__turnIndicator-mark" class="game-board-cell">🦑</div>
+                </div>
+                <div id="game-control-panel__subtitle" class="unselectable">
+                    <pre id="game-control-panel__subtitle-message">&#128712; The host is always X, the guest is always O.</pre>
+                </div>
             </div>
         </div>
         <div id="game-board__wrapper" class="disabled">
@@ -47,17 +52,20 @@
             </div>    
         </div>
         <span popover id="game-host-popover" class="unselectable">	
-            Hosted game URL copied to clipboard!	
-            &#128077;
+            <h2>Hosted game URL copied to clipboard! &#128077;</h2>
         </span>
         <span popover id="game-over-popover" class="unselectable">
-            &#127881;
-            <span id="game-over-message">Game over</span>
-            &#127881;
+            <h2>
+                &#127881;
+                <span id="game-over-message">Game over</span>
+                &#127881;
+            </h2>
         </span>
         <span popover id="error-popover" class="unselectable">
-            <span id="error-message">An error has occurred</span>
-            &#128557;
+            <h2>
+                <span id="error-message">An error has occurred</span>
+                &#128557;
+            </h2>
         </span>
     </body>    
 </html>

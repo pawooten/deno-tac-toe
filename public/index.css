@@ -10,6 +10,9 @@ body {
     display: flex;
     border-radius: 0.5vw;
 }
+#game-board .game-board-cell {
+    cursor: pointer;
+}
 .disabled {
     opacity: 20%;
 }
@@ -29,7 +32,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     border: 1px solid black;
     border-radius: 0.5vw;
     user-select: none;
@@ -49,9 +51,12 @@ body {
     margin-left: 1vw;
     text-decoration: underline;
 }
-#game-control-panel__turnHostLabel {
+#game-control-panel__turnIndicator-wrapper {
+    margin: 1vw;
+}
+#game-control-panel__turnIndicator {
     display: flex;
-    justify-content: center;
+    align-items: center;
 }
 #game-control-panel {
     display: flex;
@@ -67,7 +72,8 @@ body {
     background-color: aqua;
 }
 #game-control-panel__subtitle {
-    margin-top: 0.5em;
+    display:flex;
+    justify-content: center;
 }
 button {
     width: 10vw;

@@ -18,7 +18,7 @@ const themeMarks = new Map([
 ]);
 export const getSubtitleMessage = (theme: string): string => {
     const marks = themeMarks.get(theme) || defaultMarks;
-    return `&#128712; The host is ${marks[0]}, the guest is ${marks[1]})`;
+    return `&#128712; The host is ${marks[0]}, the guest is ${marks[1]}`;
 };
 export const getUserMark = (game: GameState, user: string): string => {
     const marks = themeMarks.get(game.theme) || defaultMarks;

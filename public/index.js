@@ -2,11 +2,7 @@ import { SocketEvents } from "./constants.js";
 // Websocket event binding
 const socket = io();
 socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostTurn, result }) => {
-    if (isHostTurn) {
-        $gameTurnLabelElement.innerHTML = 'It is the Host turn' + mark;
-    } else {
-        $gameTurnLabelElement.innerHTML = 'It is the Guest turn' + mark;
-    }
+    showTurnMessage(isHostTurn);
     const cell = $cellDivElements.get(selectedCell);
     cell.innerHTML = mark;
     if (result) {
@@ -14,6 +10,16 @@ socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostT
         guestJoined = false;
         showGameOver(result);
     }
+});
+socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
+    hostMark = host;
+    guestMark = guest;
+    showTurnMessage(true);
+    guestJoined = true;
+    $gameControlPanelSubtitleMessageElement.innerHTML = subtitle;
+    $gameHostPopoverElement.hidePopover();
+    $gameBoardWrapperElement.classList.remove('disabled');
+    $errorPopoverElement.hidePopover();
 });
 socket.on(SocketEvents.Server.Error, (message) => showError(message));
 socket.on(SocketEvents.Server.GameAbandoned, () => {
@@ -31,14 +37,6 @@ socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
     $gameStatusMessageElement.innerHTML = `Joined as guest of game ${gameId}`;
     clearCells();
 });
-socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle) => {
-    console.log('Guest joined');
-    guestJoined = true;
-    $gameControlPanelSubtitleMessageElement.innerHTML = subtitle;
-    $gameHostPopoverElement.hidePopover();
-    $gameBoardWrapperElement.classList.remove('disabled');
-    $errorPopoverElement.hidePopover();
-});
 // DOM Elements
 const onCellClick = (ev) => {
     if (!currentGame) {
@@ -52,7 +50,7 @@ const onCellClick = (ev) => {
     socket.emit(SocketEvents.Client.CellSelected, currentGame, ev.target.id);
 };
 const $cellDivElements = new Map();
-for( const cell of document.querySelectorAll('.game-board-cell')) {
+for( const cell of document.querySelectorAll('#game-board .game-board-cell')) {
     $cellDivElements.set(cell.id, cell);
     cell.addEventListener('click', onCellClick);
 }
@@ -65,9 +63,11 @@ const $gameHostPopoverElement = document.getElementById('game-host-popover');
 const $gameIdInputElement = document.getElementById('game-id-input');
 const $gameStatusMessageElement = document.getElementById('game-control-panel__gameStatus-message');
 const $gameStatusGameIdElement = document.getElementById('game-control-panel__gameStatus-gameId');
-const $gameTurnLabelElement = document.getElementById('game-control-panel__turnHostLabel');
+const $gameTurnIndicatorWrapperElement = document.getElementById('game-control-panel__turnIndicator-wrapper');
+const $gameTurnIndicatorMarkElement = document.getElementById('game-control-panel__turnIndicator-mark');
 const $hostButtonElement = document.getElementById('host-button');
 $hostButtonElement.addEventListener('click', () => {
+    $gameTurnIndicatorWrapperElement.classList.add('hidden')
     socket.emit(SocketEvents.Client.RequestHostGame);
 });
 const $joinButtonElement = document.getElementById('join-button');
@@ -81,9 +81,11 @@ $joinButtonElement.addEventListener('click', () => {
 });
 const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
 // Game logic
-let currentGame;
+let currentGame, hostMark, guestMark;
 let guestJoined = false;
-const hostGame = async (gameId, gameUrl) => {
+const hostGame = async (gameId, gameUrl, host, guest) => {
+    hostMark = host;
+    guestMark = guest;
     $gameStatusMessageElement.innerHTML = 'Hosting game';
     $gameStatusGameIdElement.innerHTML = gameId;
     $gameStatusGameIdElement.classList.remove('hidden');
@@ -112,6 +114,14 @@ const disableJoinGame = () => {
 const joinGame = (gameId) => {
     console.log('Joining game', gameId);
     socket.emit(SocketEvents.Client.RequestJoinGame, gameId);
+};
+const showTurnMessage = (isHostTurn) => {
+    $gameTurnIndicatorWrapperElement.classList.remove('hidden');
+    if (isHostTurn) {
+        $gameTurnIndicatorMarkElement.innerHTML = hostMark;
+    } else {
+        $gameTurnIndicatorMarkElement.innerHTML = guestMark;
+    }
 };
 const showError = (message) => {
     console.error(message);
