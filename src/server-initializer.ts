@@ -33,7 +33,7 @@ export class ServerInitializer {
     this.initializeWebSocketServer();
     server.listen(this.config.port, this.config.hostName);
   
-    this.console.log(`${LoggedMessages.ServerRunning}http://${this.config.hostName}:${this.config.port}`);
+    this.console.log(`${LoggedMessages.ServerRunning}${this.config.hostName}:${this.config.port}`);
   }
   private initializeWebSocketServer() {
     if (!this.socketServer) {

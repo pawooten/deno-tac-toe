@@ -13,3 +13,8 @@ export const validateServerConfig = (config: ServerConfig): void => {
         throw new Error(ErrorMessages.InvalidHostnameSpecified);
       }
 }
+export const getServerConfig = (): ServerConfig => {
+    const hostName = Deno.env.get("HOSTNAME") || "localhost";
+    const port = +(Deno.env.get("PORT") || "443");
+    return { hostName, port };
+}
