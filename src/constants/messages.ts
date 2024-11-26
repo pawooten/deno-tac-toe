@@ -9,6 +9,7 @@ export class ErrorMessages {
     static readonly InvalidPortSpecified = 'Invalid port specified';
     static readonly GameNotFound = 'Game not found';
     static readonly UnableToJoinGame = 'Another user has already joined this game';
+    static readonly UnableToReplayGame = 'Only the host may replay a game';
 }
 export class LoggedMessages {
     static readonly ServerRunning = 'Server running on ';

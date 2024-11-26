@@ -6,7 +6,7 @@ export class GameReplayHandler extends BaseHandler {
     public handle(gameId: string): void {
         console.log(`Replaying game with id: ${gameId}`);
         try {
-            this.manager.replay(gameId);
+            this.manager.replay(gameId, this.socket.id);
             this.socket.emit(SocketEvents.Server.HostGameAccepted, gameId);
 
             const game = this.manager.get(gameId);

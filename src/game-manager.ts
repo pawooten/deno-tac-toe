@@ -61,10 +61,13 @@ export class GameManager {
         return gameId;
     }
 
-    public replay(gameId: string): void {
+    public replay(gameId: string, userId: string): void {
         const game = this.games.get(gameId);
         if (!game) {
             throw new Error(`'${gameId}' ${ErrorMessages.GameNotFound}`);
+        }
+        if (game.host !== userId) {
+            throw new Error(ErrorMessages.UnableToReplayGame);
         }
         game.cells = [
             ['', '', ''],
