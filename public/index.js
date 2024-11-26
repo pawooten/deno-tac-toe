@@ -21,6 +21,7 @@ socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
     $gameBoardWrapperElement.classList.remove('disabled');
     $errorPopoverElement.hidePopover();
     $gameOverPopoverElement.hidePopover();
+    clearCells();
 });
 socket.on(SocketEvents.Server.Error, (message) => showError(message));
 socket.on(SocketEvents.Server.GameAbandoned, () => {
@@ -36,7 +37,6 @@ socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
     disableJoinGame();
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusMessageElement.innerHTML = `Joined as guest of game ${gameId}`;
-    clearCells();
 });
 // DOM Elements
 const onCellClick = (ev) => {

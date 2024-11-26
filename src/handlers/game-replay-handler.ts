@@ -12,7 +12,7 @@ export class GameReplayHandler extends BaseHandler {
             const game = this.manager.get(gameId);
             const hostMark = getUserMark(game, game.host);
             const guestMark = getUserMark(game, game.guest);
-            this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.GuestJoined, getSubtitleMessage(game.theme), hostMark, guestMark);
+            this.socketServer.to(gameId).emit(SocketEvents.ServerBroadcast.GuestJoined, `${getSubtitleMessage(game.theme)} Rematch!`, hostMark, guestMark);
         } catch (error) {
             console.error(error);
             this.socket.emit(SocketEvents.Server.Error, error.message);
