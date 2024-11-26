@@ -81,6 +81,7 @@ body {
 #game-control-panel__subtitle {
     display:flex;
     justify-content: center;
+    flex-direction: column;
 }
 #game-over-popover div {
     display: flex;

@@ -1,4 +1,4 @@
-import { SocketEvents } from "./constants.js";
+import { GameThemes, SocketEvents } from "./constants.js";
 // Websocket event binding
 const socket = io();
 socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostTurn, result }) => {
@@ -67,6 +67,7 @@ const $gameStatusGameIdElement = document.getElementById('game-control-panel__ga
 const $gameTurnIndicatorWrapperElement = document.getElementById('game-control-panel__turnIndicator-wrapper');
 const $gameTurnIndicatorMarkElement = document.getElementById('game-control-panel__turnIndicator-mark');
 const $hostButtonElement = document.getElementById('host-button');
+const $themeSelectElement = document.getElementById('theme-select');
 $hostButtonElement.addEventListener('click', () => {
     $gameTurnIndicatorWrapperElement.classList.add('hidden')
     socket.emit(SocketEvents.Client.RequestHostGame);
@@ -160,3 +161,12 @@ const queryStringGameId = parseGameId();
 if (queryStringGameId) {
     joinGame(queryStringGameId);
 }
+const loadThemes = () => {
+    for (const theme in GameThemes) {
+        const option = document.createElement('option');
+        option.value = theme;
+        option.innerHTML = theme;
+        $themeSelectElement.appendChild(option);
+    }
+};
+loadThemes();

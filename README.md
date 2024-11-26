@@ -2,7 +2,6 @@
 
 TODO:
 
-- play again (with same host and guest)
 - dropdown to select theme
 - random theme
 - game timeout
@@ -12,6 +11,7 @@ TODO:
 
 Done:
 
+- play again (with same host and guest)
 - display current theme in subtitle
 - detect win
 - detect stalemate
