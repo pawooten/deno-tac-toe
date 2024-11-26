@@ -11,12 +11,11 @@ socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostT
         showGameOver(result);
     }
 });
-socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
+socket.on(SocketEvents.ServerBroadcast.GuestJoined, (host, guest) => {
     gameState.hostMark = host;
     gameState.guestMark = guest;
     showTurnMessage(true);
     gameState.guestJoined = true;
-    console.log(subtitle);
     $gameHostPopoverElement.hidePopover();
     $gameBoardWrapperElement.classList.remove('disabled');
     $errorPopoverElement.hidePopover();

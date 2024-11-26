@@ -4,7 +4,6 @@ TODO:
 
 - game timeout
 - tests
-- remove subtitle "The host is {0} the guest is {0}"
 - detect http/https; remove USE_HTTP env variable
 
 Done:

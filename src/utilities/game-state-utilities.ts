@@ -16,10 +16,6 @@ const themeMarks = new Map([
     [GameThemes.tacoVsRamen, ['&#127790;', '&#127836;']],
     [GameThemes.vampireVsZombie, ['&#129499;', '&#129503;']],
 ]);
-export const getSubtitleMessage = (theme: string): string => {
-    const marks = themeMarks.get(theme) || defaultMarks;
-    return `&#128712; The host is ${marks[0]}, the guest is ${marks[1]}`;
-};
 export const getUserMark = (game: GameState, user: string): string => {
     const marks = themeMarks.get(game.theme) || defaultMarks;
     const [x, o] = marks;
