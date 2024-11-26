@@ -1,6 +1,6 @@
 import { GameState } from "./game-state.ts";
-import { ErrorMessages } from "./constants/messages.ts";
-import { DefaultGameTheme, GameThemes } from "../public/constants.js";
+import { ErrorMessages, LoggedMessages } from "./constants/messages.ts";
+import { GameThemes } from "../public/constants.js";
 import { validateTheme } from "./utilities/theme-validator.ts";
 
 export class GameManager {
@@ -26,6 +26,8 @@ export class GameManager {
     }
 
     public host(host: string, theme: string): HostResult {
+        this.cleanUp();
+
         const defaultTheme = GameThemes.classic;
         const abandonedGameId = this.gameIDsByPlayer.get(host);
         if (abandonedGameId) {
@@ -40,6 +42,7 @@ export class GameManager {
         }
         const newGameId =  crypto.randomUUID();
         const game: GameState = {
+            heartbeat: new Date(),
             host, 
             guest: '',
             id: newGameId,
@@ -78,12 +81,25 @@ export class GameManager {
         if (game.host !== userId) {
             throw new Error(ErrorMessages.UnableToReplayGame);
         }
+        game.heartbeat = new Date();
         game.cells = [
             ['', '', ''],
             ['', '', ''],
             ['', '', '']
         ];
         game.isHostTurn = true;
+    }
+
+    private cleanUp(): void {
+        console.log(`${LoggedMessages.CleanupStarted} ${this.games.size}, ${this.gameIDsByPlayer.size}`);
+        for (const game of this.games.values()) {
+            const timeSinceLastHeartbeat = new Date().getTime() - game.heartbeat.getTime();
+            const twoMinutes = 1000 * 60 * 2;
+            if (timeSinceLastHeartbeat > twoMinutes) {
+                this.end(game.id);
+            }
+        }
+        console.log(`${LoggedMessages.CleanupEnded} ${this.games.size}, ${this.gameIDsByPlayer.size}`);
     }
 }
 

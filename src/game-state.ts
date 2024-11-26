@@ -1,4 +1,5 @@
 export interface GameState {
+    heartbeat: Date;
     id: string;
     host: string;
     isHostTurn: boolean;

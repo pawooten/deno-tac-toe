@@ -14,6 +14,8 @@ export class ErrorMessages {
     static readonly UnableToReplayGame = 'Only the host may replay a game';
 }
 export class LoggedMessages {
+    static readonly CleanupStarted = 'Cleanup started';
+    static readonly CleanupEnded = 'Cleanup ended';
     static readonly ServerRunning = 'Server running on ';
     static readonly WebSocketServerInitialized = 'Web socket server initialized';
     static readonly WebSocketConnection = 'A new web socket connection has been established';

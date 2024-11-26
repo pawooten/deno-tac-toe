@@ -3,6 +3,9 @@
 TODO:
 
 - game timeout
+ - display countdown timer
+- timed turns
+ - display turn countdown
 - tests
 - detect http/https; remove USE_HTTP env variable
 
