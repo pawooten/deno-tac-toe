@@ -86,7 +86,10 @@ $playAgainButtonElement.addEventListener('click', () => {
 });
 const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
 // Game logic
-const gameState = { id: null, hostMark: '', guestMark: '', guestJoined: false, isHost: false };
+const gameState = {
+    id: null,// The id of the current game, or null
+    hostMark: '', guestMark: '', guestJoined: false, isHost: false
+};
 const hostGame = async (gameId, gameUrl, host, guest) => {
     gameState.hostMark = host;
     gameState.guestMark = guest;
