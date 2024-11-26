@@ -93,6 +93,7 @@ const gameState = {
 const hostGame = async (gameId, gameUrl, host, guest) => {
     gameState.hostMark = host;
     gameState.guestMark = guest;
+    gameState.isHost = true;
     $gameStatusMessageElement.innerHTML = 'Hosting game';
     $gameStatusGameIdElement.innerHTML = gameId;
     $gameStatusGameIdElement.classList.remove('hidden');
@@ -139,6 +140,9 @@ const showGameOver = (result) => {
     
     for (const cell of result.cellIds) {
         $cellDivElements.get(cell).classList.add('winning-game-board-cell');
+    }
+    if (gameState.isHost) {
+        $playAgainButtonElement.removeAttribute('disabled');
     }
     $gameOverMessageElement.innerHTML = result.message;
     $gameOverPopoverElement.showPopover();
