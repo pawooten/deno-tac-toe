@@ -7,7 +7,6 @@ socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostT
     const cell = $cellDivElements.get(selectedCell);
     cell.innerHTML = mark;
     if (result) {
-        currentGame = null;
         guestJoined = false;
         showGameOver(result);
     }
@@ -21,6 +20,8 @@ socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
     $gameHostPopoverElement.hidePopover();
     $gameBoardWrapperElement.classList.remove('disabled');
     $errorPopoverElement.hidePopover();
+    $gameOverPopoverElement.hidePopover();
+    clearCells();
 });
 socket.on(SocketEvents.Server.Error, (message) => showError(message));
 socket.on(SocketEvents.Server.GameAbandoned, () => {
@@ -36,7 +37,6 @@ socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
     disableJoinGame();
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusMessageElement.innerHTML = `Joined as guest of game ${gameId}`;
-    clearCells();
 });
 // DOM Elements
 const onCellClick = (ev) => {
@@ -79,6 +79,10 @@ $joinButtonElement.addEventListener('click', () => {
         return;
     }
     joinGame($gameIdInputElement.value);
+});
+const $playAgainButtonElement = document.getElementById('play-again-button');
+$playAgainButtonElement.addEventListener('click', () => {
+    socket.emit(SocketEvents.Client.ReplayGame, currentGame);
 });
 const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
 // Game logic

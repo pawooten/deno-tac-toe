@@ -5,6 +5,8 @@ export const SocketEvents = {
         Connection: 'connection',
         // The host or guest user has clicked a cell in an attempt to mark it
         CellSelected: 'cell-selected',
+        // The host has requested to replay the game
+        ReplayGame: 'replay-game',
         // A user has requested to host a new game
         RequestHostGame: 'request-host-game',
         // A user has requested to join an existing game as guest
