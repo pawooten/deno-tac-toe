@@ -71,7 +71,10 @@ body {
     display: flex;
     gap: 1em;
 }
-#game-control-panel__join {
+#theme-select, #game-id-input {
+    margin:1.5em 0;
+}
+.control-panel-group {
     border: 1px solid black;
     border-radius: 0.5em;
     padding: 0.5em;
@@ -91,7 +94,7 @@ body {
 #game-over-popover button {
     width:100%;
 }
-#host-button {
+#host-button, #join-button {
     margin: 1em 0;
 }
 button {

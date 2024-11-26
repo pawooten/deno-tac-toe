@@ -16,8 +16,12 @@
         </pre>
         <div id="game-control-panel">
             <div>
-                <button id="host-button" popovertarget="game-host-popover">Host</button>
-                <div id="game-control-panel__join">
+                <div class="control-panel-group">
+                    <button id="host-button" popovertarget="game-host-popover">Host</button>    
+                    <select id="theme-select">
+                    </select>
+                </div>
+                <div class="control-panel-group">
                     <button id="join-button">Join</button>
                     <input type="text" id="game-id-input" placeholder="Join Code" autocomplete="off">        
                 </div>
@@ -29,8 +33,6 @@
                 </div>
                 <div id="game-control-panel__subtitle" class="unselectable">
                     <pre id="game-control-panel__subtitle-message">&#128712; The host is always X, the guest is always O.</pre>
-                    <select id="theme-select">
-                    </select>
                 </div>
             </div>
         </div>
