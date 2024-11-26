@@ -16,7 +16,7 @@ socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
     gameState.guestMark = guest;
     showTurnMessage(true);
     gameState.guestJoined = true;
-    $gameControlPanelSubtitleMessageElement.innerHTML = subtitle;
+    console.log(subtitle);
     $gameHostPopoverElement.hidePopover();
     $gameBoardWrapperElement.classList.remove('disabled');
     $errorPopoverElement.hidePopover();
@@ -65,7 +65,8 @@ const $gameIdInputElement = document.getElementById('game-id-input');
 const $gameStatusMessageElement = document.getElementById('game-control-panel__gameStatus-message');
 const $gameStatusGameIdElement = document.getElementById('game-control-panel__gameStatus-gameId');
 const $gameTurnIndicatorWrapperElement = document.getElementById('game-control-panel__turnIndicator-wrapper');
-const $gameTurnIndicatorMarkElement = document.getElementById('game-control-panel__turnIndicator-mark');
+const $gameTurnIndicatorHostElement = document.getElementById('game-control-panel__turnIndicator-host');
+const $gameTurnIndicatorGuestElement = document.getElementById('game-control-panel__turnIndicator-guest');
 const $hostButtonElement = document.getElementById('host-button');
 const $themeSelectElement = document.getElementById('theme-select');
 $hostButtonElement.addEventListener('click', () => {
@@ -85,7 +86,6 @@ const $playAgainButtonElement = document.getElementById('play-again-button');
 $playAgainButtonElement.addEventListener('click', () => {
     socket.emit(SocketEvents.Client.ReplayGame, gameState.id);
 });
-const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
 // Game logic
 const gameState = {
     id: null,// The id of the current game, or null
@@ -126,11 +126,9 @@ const joinGame = (gameId) => {
 };
 const showTurnMessage = (isHostTurn) => {
     $gameTurnIndicatorWrapperElement.classList.remove('hidden');
-    if (isHostTurn) {
-        $gameTurnIndicatorMarkElement.innerHTML = gameState.hostMark;
-    } else {
-        $gameTurnIndicatorMarkElement.innerHTML = gameState.guestMark;
-    }
+    $gameTurnIndicatorHostElement.innerHTML = gameState.hostMark;
+    $gameTurnIndicatorGuestElement.innerHTML = gameState.guestMark;
+    console.log('isHostTurn', isHostTurn);
 };
 const showError = (message) => {
     console.error(message);

@@ -28,11 +28,15 @@
             </div>
             <div id="game-control-panel__turnIndicator-wrapper" class="hidden">
                 <div id="game-control-panel__turnIndicator">
-                    <h4 class="unselectable">Current Turn:</h4>
-                    <div id="game-control-panel__turnIndicator-mark" class="game-board-cell"></div>
-                </div>
-                <div id="game-control-panel__subtitle" class="unselectable">
-                    <pre id="game-control-panel__subtitle-message">&#128712; The host is always X, the guest is always O.</pre>
+                    <div class="game-control-panel__column">
+                        <div id="game-control-panel__turnIndicator-host" class="game-board-cell"></div>
+                        <span>Host</span>
+                    </div>
+                    <span>Vs.</span>
+                    <div class="game-control-panel__column">
+                        <div id="game-control-panel__turnIndicator-guest" class="game-board-cell"></div>
+                        <span>Guest</span>
+                    </div>
                 </div>
             </div>
         </div>
