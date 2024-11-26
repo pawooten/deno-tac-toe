@@ -12,8 +12,8 @@ socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostT
     }
 });
 socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
-    hostMark = host;
-    guestMark = guest;
+    gameState.hostMark = host;
+    gameState.guestMark = guest;
     showTurnMessage(true);
     guestJoined = true;
     $gameControlPanelSubtitleMessageElement.innerHTML = subtitle;
@@ -25,7 +25,7 @@ socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
 });
 socket.on(SocketEvents.Server.Error, (message) => showError(message));
 socket.on(SocketEvents.Server.GameAbandoned, () => {
-    currentGame = null;
+    gameState.id = null;
     guestJoined = false;
     showError('The host has abandoned the game');
 });
@@ -33,14 +33,14 @@ socket.on(SocketEvents.Server.HostGameAccepted, (gameId, gameUrl) => {
     hostGame(gameId, gameUrl);
 });
 socket.on(SocketEvents.Server.JoinGameAccepted, (gameId) => {
-    currentGame = gameId;
+gameState.id = gameId;
     disableJoinGame();
     $gameBoardWrapperElement.classList.remove('disabled');
     $gameStatusMessageElement.innerHTML = `Joined as guest of game ${gameId}`;
 });
 // DOM Elements
 const onCellClick = (ev) => {
-    if (!currentGame) {
+    if (!gameState.id) {
         showError('No game in progress. Host or join a game as a guest');
         return;
     }
@@ -48,7 +48,7 @@ const onCellClick = (ev) => {
         showError('A game has been hosted but no guest has joined yet');
         return;
     }
-    socket.emit(SocketEvents.Client.CellSelected, currentGame, ev.target.id);
+    socket.emit(SocketEvents.Client.CellSelected, gameState.id, ev.target.id);
 };
 const $cellDivElements = new Map();
 for( const cell of document.querySelectorAll('#game-board .game-board-cell')) {
@@ -86,15 +86,15 @@ $playAgainButtonElement.addEventListener('click', () => {
 });
 const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
 // Game logic
-let currentGame, hostMark, guestMark;
+const gameState = { id: null, hostMark: '', guestMark: '', isHost: false };
 let guestJoined = false;
 const hostGame = async (gameId, gameUrl, host, guest) => {
-    hostMark = host;
-    guestMark = guest;
+    gameState.hostMark = host;
+    gameState.guestMark = guest;
     $gameStatusMessageElement.innerHTML = 'Hosting game';
     $gameStatusGameIdElement.innerHTML = gameId;
     $gameStatusGameIdElement.classList.remove('hidden');
-    currentGame = gameId;
+    gameState.id = gameId;
     guestJoined = false;
     clearCells();
     disableJoinGame();
@@ -123,9 +123,9 @@ const joinGame = (gameId) => {
 const showTurnMessage = (isHostTurn) => {
     $gameTurnIndicatorWrapperElement.classList.remove('hidden');
     if (isHostTurn) {
-        $gameTurnIndicatorMarkElement.innerHTML = hostMark;
+        $gameTurnIndicatorMarkElement.innerHTML = gameState.hostMark;
     } else {
-        $gameTurnIndicatorMarkElement.innerHTML = guestMark;
+        $gameTurnIndicatorMarkElement.innerHTML = gameState.guestMark;
     }
 };
 const showError = (message) => {
