@@ -1,6 +1,7 @@
 import { GameState } from "./game-state.ts";
 import { ErrorMessages } from "./constants/messages.ts";
-import { GameThemes } from "../public/constants.js";
+import { DefaultGameTheme } from "../public/constants.js";
+import { validateTheme } from "./utilities/theme-validator.ts";
 
 export class GameManager {
     private games: Map<string, GameState> = new Map<string, GameState>();
@@ -29,13 +30,20 @@ export class GameManager {
         if (abandonedGameId) {
             this.end(abandonedGameId);
         }
+        let validatedTheme = null;
+        try {
+            validatedTheme = validateTheme(theme);
+        } catch (error) {
+            console.error(error);
+            validatedTheme = DefaultGameTheme;
+        }
         const newGameId =  crypto.randomUUID();
         const game: GameState = {
             host, 
             guest: '',
             id: newGameId,
             isHostTurn: true,
-            theme,
+            theme: validatedTheme,
             cells: [
                 ['', '', ''],
                 ['', '', ''],

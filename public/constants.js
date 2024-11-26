@@ -43,4 +43,6 @@ export const GameThemes = {
     meatVsSalad: 'meat-vs-salad',
     tacoVsRamen: 'taco-vs-ramen',
     vampireVsZombie: 'vampire-vs-zombie',
+    random: 'random'
 };
+export const DefaultGameTheme = GameThemes.classic;

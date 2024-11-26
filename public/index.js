@@ -1,4 +1,4 @@
-import { GameThemes, SocketEvents } from "./constants.js";
+import { DefaultGameTheme, GameThemes, SocketEvents } from "./constants.js";
 // Websocket event binding
 const socket = io();
 socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostTurn, result }) => {
@@ -165,6 +165,9 @@ const loadThemes = () => {
     for (const theme in GameThemes) {
         const option = document.createElement('option');
         option.value = GameThemes[theme];
+        if (option.value === DefaultGameTheme) {
+            option.selected = true;
+        }
         option.innerHTML = theme;
         $themeSelectElement.appendChild(option);
     }
