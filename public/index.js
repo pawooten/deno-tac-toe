@@ -82,7 +82,7 @@ $joinButtonElement.addEventListener('click', () => {
 });
 const $playAgainButtonElement = document.getElementById('play-again-button');
 $playAgainButtonElement.addEventListener('click', () => {
-    socket.emit(SocketEvents.Client.ReplayGame, currentGame);
+    socket.emit(SocketEvents.Client.ReplayGame, gameState.id);
 });
 const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
 // Game logic
