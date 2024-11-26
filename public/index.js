@@ -70,7 +70,7 @@ const $hostButtonElement = document.getElementById('host-button');
 const $themeSelectElement = document.getElementById('theme-select');
 $hostButtonElement.addEventListener('click', () => {
     $gameTurnIndicatorWrapperElement.classList.add('hidden')
-    socket.emit(SocketEvents.Client.RequestHostGame);
+    socket.emit(SocketEvents.Client.RequestHostGame, $themeSelectElement.value);
 });
 const $joinButtonElement = document.getElementById('join-button');
 $joinButtonElement.addEventListener('click', () => {
@@ -164,7 +164,7 @@ if (queryStringGameId) {
 const loadThemes = () => {
     for (const theme in GameThemes) {
         const option = document.createElement('option');
-        option.value = theme;
+        option.value = GameThemes[theme];
         option.innerHTML = theme;
         $themeSelectElement.appendChild(option);
     }

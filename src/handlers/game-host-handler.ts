@@ -10,8 +10,8 @@ export class GameHostHandler extends BaseHandler {
         super(socket, socketServer, manager);
         this.config = config;
     }
-    public handle(): void {
-        const { newGameId, abandonedGameId } = this.manager.host(this.socket.id);
+    public handle(theme: string): void {
+        const { newGameId, abandonedGameId } = this.manager.host(this.socket.id, theme);
         if (abandonedGameId) {
             this.socket.leave(abandonedGameId);
             this.socketServer.to(abandonedGameId).emit(SocketEvents.Server.GameAbandoned);

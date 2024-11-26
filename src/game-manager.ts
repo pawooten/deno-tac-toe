@@ -24,7 +24,7 @@ export class GameManager {
         return game;
     }
 
-    public host(host: string): HostResult {
+    public host(host: string, theme: string): HostResult {
         const abandonedGameId = this.gameIDsByPlayer.get(host);
         if (abandonedGameId) {
             this.end(abandonedGameId);
@@ -35,7 +35,7 @@ export class GameManager {
             guest: '',
             id: newGameId,
             isHostTurn: true,
-            theme: GameThemes.dinosaurVsSquid,
+            theme,
             cells: [
                 ['', '', ''],
                 ['', '', ''],

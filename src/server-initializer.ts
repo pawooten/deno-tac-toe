@@ -54,7 +54,7 @@ export class ServerInitializer {
     const selectionHandler = new CellSelectionHandler(socket, this.socketServer, this.manager);
     console.log(LoggedMessages.WebSocketConnection);
     socket.on(SocketEvents.Client.CellSelected, (gameId: string, selectedCell: string) => selectionHandler.handle(gameId, selectedCell));
-    socket.on(SocketEvents.Client.RequestHostGame, () => gameHostHandler.handle());
+    socket.on(SocketEvents.Client.RequestHostGame, (theme: string) => gameHostHandler.handle(theme));
     socket.on(SocketEvents.Client.RequestJoinGame, (gameId: string) => gameJoinHandler.handle(gameId));
     socket.on(SocketEvents.Client.ReplayGame, (gameId: string) => gameReplayHandler.handle(gameId));
   };
