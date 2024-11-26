@@ -11,6 +11,7 @@ import { ServerConfig } from "./server-config.ts";
 import { validateServerConfig } from "./utilities/server-config-validator.ts";
 import { GameJoinHandler } from "./handlers/game-join-handler.ts";
 import { GameManager } from "./game-manager.ts";
+import { GameReplayHandler } from "./handlers/game-replay-handler.ts";
 
 export const staticRequestHandler = express.static(ServerConstants.Public);
 
@@ -49,10 +50,12 @@ export class ServerInitializer {
     }
     const gameHostHandler = new GameHostHandler(socket, this.socketServer, this.config, this.manager);
     const gameJoinHandler = new GameJoinHandler(socket, this.socketServer, this.manager);
+    const gameReplayHandler = new GameReplayHandler(socket, this.socketServer, this.manager);
     const selectionHandler = new CellSelectionHandler(socket, this.socketServer, this.manager);
     console.log(LoggedMessages.WebSocketConnection);
     socket.on(SocketEvents.Client.CellSelected, (gameId: string, selectedCell: string) => selectionHandler.handle(gameId, selectedCell));
     socket.on(SocketEvents.Client.RequestHostGame, () => gameHostHandler.handle());
     socket.on(SocketEvents.Client.RequestJoinGame, (gameId: string) => gameJoinHandler.handle(gameId));
+    socket.on(SocketEvents.Client.ReplayGame, (gameId: string) => gameReplayHandler.handle(gameId));
   };
 }

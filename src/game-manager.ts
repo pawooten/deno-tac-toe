@@ -60,6 +60,19 @@ export class GameManager {
         game.guest = guest;
         return gameId;
     }
+
+    public replay(gameId: string): void {
+        const game = this.games.get(gameId);
+        if (!game) {
+            throw new Error(`'${gameId}' ${ErrorMessages.GameNotFound}`);
+        }
+        game.cells = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
+        ];
+        game.isHostTurn = true;
+    }
 }
 
 export interface HostResult {
