@@ -66,6 +66,8 @@ const $gameStatusMessageElement = document.getElementById('game-control-panel__g
 const $gameStatusGameIdElement = document.getElementById('game-control-panel__gameStatus-gameId');
 const $gameTurnIndicatorWrapperElement = document.getElementById('game-control-panel__turnIndicator-wrapper');
 const $gameTurnIndicatorHostElement = document.getElementById('game-control-panel__turnIndicator-host');
+const $hostTurnColumnElement = document.getElementById('host-turn-column');
+const $guestTurnColumnElement = document.getElementById('guest-turn-column');
 const $gameTurnIndicatorGuestElement = document.getElementById('game-control-panel__turnIndicator-guest');
 const $hostButtonElement = document.getElementById('host-button');
 const $themeSelectElement = document.getElementById('theme-select');
@@ -128,7 +130,13 @@ const showTurnMessage = (isHostTurn) => {
     $gameTurnIndicatorWrapperElement.classList.remove('hidden');
     $gameTurnIndicatorHostElement.innerHTML = gameState.hostMark;
     $gameTurnIndicatorGuestElement.innerHTML = gameState.guestMark;
-    console.log('isHostTurn', isHostTurn);
+    if (isHostTurn) {
+        $hostTurnColumnElement.classList.add('current-turn');
+        $guestTurnColumnElement.classList.remove('current-turn');
+    } else {
+        $hostTurnColumnElement.classList.remove('current-turn');
+        $guestTurnColumnElement.classList.add('current-turn');
+    }
 };
 const showError = (message) => {
     console.error(message);

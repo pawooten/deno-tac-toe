@@ -80,6 +80,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 1px solid black;
+    border-radius: 0.5em;
+}
+.current-turn {
+    background-color: lightgreen;
+}
+#game-control-panel__turnIndicator-wrapper {
+    margin: 0.5em 0;
 }
 #game-over-popover div {
     display: flex;
