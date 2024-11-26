@@ -1,6 +1,6 @@
 import { GameState } from "./game-state.ts";
 import { ErrorMessages } from "./constants/messages.ts";
-import { DefaultGameTheme } from "../public/constants.js";
+import { DefaultGameTheme, GameThemes } from "../public/constants.js";
 import { validateTheme } from "./utilities/theme-validator.ts";
 
 export class GameManager {
@@ -26,6 +26,7 @@ export class GameManager {
     }
 
     public host(host: string, theme: string): HostResult {
+        const defaultTheme = GameThemes.classic;
         const abandonedGameId = this.gameIDsByPlayer.get(host);
         if (abandonedGameId) {
             this.end(abandonedGameId);
@@ -35,7 +36,7 @@ export class GameManager {
             validatedTheme = validateTheme(theme);
         } catch (error) {
             console.error(error);
-            validatedTheme = DefaultGameTheme;
+            validatedTheme = defaultTheme;
         }
         const newGameId =  crypto.randomUUID();
         const game: GameState = {

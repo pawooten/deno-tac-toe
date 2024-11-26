@@ -45,4 +45,4 @@ export const GameThemes = {
     vampireVsZombie: 'vampire-vs-zombie',
     random: 'random'
 };
-export const DefaultGameTheme = GameThemes.classic;
+export const DefaultGameTheme = GameThemes.random;
