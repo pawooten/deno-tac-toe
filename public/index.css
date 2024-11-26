@@ -8,7 +8,7 @@ body {
 #game-board {
     background-color: aqua;
     display: flex;
-    border-radius: 0.5vw;
+    border-radius: 0.5em;
 }
 #game-board .game-board-cell {
     cursor: pointer;
@@ -18,6 +18,9 @@ body {
 }
 .hidden {
     display: none;
+}
+.popover {
+    border-radius: 0.5em;
 }
 .unselectable {
     user-select: none;
@@ -33,13 +36,13 @@ body {
     align-items: center;
     justify-content: center;
     border: 1px solid black;
-    border-radius: 0.5vw;
+    border-radius: 0.2em;
     user-select: none;
 }
 .winning-game-board-cell {
     background-color:lightgreen;
     transition: background-color 1000ms linear;
-    border-radius: 100px;
+    border-radius: 10em;
     transition: border-radius 500ms linear;
 }
 #game-control-panel__gameStatus {
@@ -64,9 +67,13 @@ body {
     align-items: center;
     margin: 1em;
 }
+#game-control-panel div {
+    display: flex;
+    gap: 1em;
+}
 #game-control-panel__join {
     border: 1px solid black;
-    border-radius: 0.5vw;
+    border-radius: 0.5em;
     padding: 0.5em;
     margin: 1vw; 
     background-color: aqua;
@@ -75,9 +82,35 @@ body {
     display:flex;
     justify-content: center;
 }
+#game-over-popover div {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+#game-over-popover button {
+    width:100%;
+}
+#host-button {
+    margin: 1em 0;
+}
 button {
-    width: 10vw;
+    width: 6em;
     cursor: pointer;
+    padding: 1em;
+    background: lightgreen;
+    border: 1px solid black;
+    border-radius: 0.5em;
+    color: darkslategray;
+    font-size: 1em;
+    transition: background .3s ease;
+}
+button:hover {
+    background: rgb(101, 231, 101);
+}
+button:disabled {
+    background: lightgray;
+    color: slategray;
+    cursor: not-allowed;
 }
 pre {
     margin:0;

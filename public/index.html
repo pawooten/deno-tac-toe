@@ -17,10 +17,10 @@
         <div id="game-control-panel">
             <div>
                 <button id="host-button" popovertarget="game-host-popover">Host</button>
-                <span id="game-control-panel__join">
+                <div id="game-control-panel__join">
                     <button id="join-button">Join</button>
                     <input type="text" id="game-id-input" placeholder="Join Code" autocomplete="off">        
-                </span>
+                </div>
             </div>
             <div id="game-control-panel__turnIndicator-wrapper" class="hidden">
                 <div id="game-control-panel__turnIndicator">
@@ -51,17 +51,22 @@
                 </div>
             </div>    
         </div>
-        <span popover id="game-host-popover" class="unselectable">	
+        <span popover id="game-host-popover" class="popover unselectable">	
             <h2>Hosted game URL copied to clipboard! &#128077;</h2>
         </span>
-        <span popover id="game-over-popover" class="unselectable">
-            <h2>
-                &#127881;
-                <span id="game-over-message">Game over</span>
-                &#127881;
-            </h2>
-        </span>
-        <span popover id="error-popover" class="unselectable">
+        <div popover id="game-over-popover" class="popover unselectable">
+            <div>
+                <h2>
+                    &#127881;
+                    <span id="game-over-message">Game over</span>
+                    &#127881;
+                </h2>
+                <button id="game-over-popover__play-again">
+                    Play Again
+                </button>
+            </div>
+        </div>
+        <span popover id="error-popover" class="popover unselectable">
             <h2>
                 <span id="error-message">An error has occurred</span>
                 &#128557;
