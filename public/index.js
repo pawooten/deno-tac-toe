@@ -7,7 +7,7 @@ socket.on(SocketEvents.ServerBroadcast.CellMarked, ({selectedCell, mark, isHostT
     const cell = $cellDivElements.get(selectedCell);
     cell.innerHTML = mark;
     if (result) {
-        guestJoined = false;
+        gameState.guestJoined = false;
         showGameOver(result);
     }
 });
@@ -15,7 +15,7 @@ socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
     gameState.hostMark = host;
     gameState.guestMark = guest;
     showTurnMessage(true);
-    guestJoined = true;
+    gameState.guestJoined = true;
     $gameControlPanelSubtitleMessageElement.innerHTML = subtitle;
     $gameHostPopoverElement.hidePopover();
     $gameBoardWrapperElement.classList.remove('disabled');
@@ -26,7 +26,7 @@ socket.on(SocketEvents.ServerBroadcast.GuestJoined, (subtitle, host, guest) => {
 socket.on(SocketEvents.Server.Error, (message) => showError(message));
 socket.on(SocketEvents.Server.GameAbandoned, () => {
     gameState.id = null;
-    guestJoined = false;
+    gameState.guestJoined = false;
     showError('The host has abandoned the game');
 });
 socket.on(SocketEvents.Server.HostGameAccepted, (gameId, gameUrl) => {
@@ -44,7 +44,7 @@ const onCellClick = (ev) => {
         showError('No game in progress. Host or join a game as a guest');
         return;
     }
-    if (!guestJoined) {
+    if (!gameState.guestJoined) {
         showError('A game has been hosted but no guest has joined yet');
         return;
     }
@@ -86,8 +86,7 @@ $playAgainButtonElement.addEventListener('click', () => {
 });
 const $gameControlPanelSubtitleMessageElement = document.getElementById('game-control-panel__subtitle-message');
 // Game logic
-const gameState = { id: null, hostMark: '', guestMark: '', isHost: false };
-let guestJoined = false;
+const gameState = { id: null, hostMark: '', guestMark: '', guestJoined: false, isHost: false };
 const hostGame = async (gameId, gameUrl, host, guest) => {
     gameState.hostMark = host;
     gameState.guestMark = guest;
@@ -95,7 +94,7 @@ const hostGame = async (gameId, gameUrl, host, guest) => {
     $gameStatusGameIdElement.innerHTML = gameId;
     $gameStatusGameIdElement.classList.remove('hidden');
     gameState.id = gameId;
-    guestJoined = false;
+    gameState.guestJoined = false;
     clearCells();
     disableJoinGame();
     try {
